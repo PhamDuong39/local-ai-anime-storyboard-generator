@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card">
+    <h2>Create a new project</h2>
+    <p class="muted">Choose a name and image size. Everything is stored locally.</p>
+
+    <form action="/projects" method="post" class="form-stack">
+      <label>
+        <span>Project name</span>
+        <input name="project_name" value="{{ project_name or '' }}" required autofocus>
+      </label>
+
+      <label>
+        <span>Output preset</span>
+        <select name="output_preset" required>
+          {% for preset in presets %}
+            <option
+              value="{{ preset.id.value }}"
+              {% if (selected_preset or default_preset) == preset.id.value %}selected{% endif %}
+            >
+              {{ preset.name }} — {{ preset.width }}×{{ preset.height }}, {{ preset.aspect_ratio }}
+            </option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label>
+        <span>Description <small>(optional)</small></span>
+        <textarea name="description" rows="4">{{ description or '' }}</textarea>
+      </label>
+
+      <div class="actions">
+        <button type="submit">Create project</button>
+        <a href="/">Cancel</a>
+      </div>
+    </form>
+  </section>
+{% endblock %}

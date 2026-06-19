@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card">
+    <p class="eyebrow">Project</p>
+    <h2>{{ project.project_name }}</h2>
+    {% if project.description %}<p class="muted">{{ project.description }}</p>{% endif %}
+    <dl class="project-facts">
+      <div><dt>Status</dt><dd>{{ project.status.value }}</dd></div>
+      <div><dt>Output</dt><dd>{{ project.output_preset.name }} — {{ project.output_preset.width }}×{{ project.output_preset.height }}</dd></div>
+    </dl>
+    <div class="actions">
+      <a class="button" href="/projects/{{ project.project_id }}/story">Continue to story upload</a>
+    </div>
+  </section>
+{% endblock %}

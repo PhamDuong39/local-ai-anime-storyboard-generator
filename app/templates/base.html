@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page_title or "Local AI Storyboard Generator" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/app.css') }}">
+    <script src="{{ url_for('static', path='vendor/htmx/htmx.min.js') }}" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <p class="eyebrow">Phase 1 MVP</p>
+        <h1 class="site-title">Local AI Storyboard Generator</h1>
+      </header>
+
+      {% include "partials/_flash.html" %}
+
+      <main class="page-content">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </body>
+</html>

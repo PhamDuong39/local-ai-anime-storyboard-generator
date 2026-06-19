@@ -1,0 +1,10 @@
+<section class="flash-region" aria-live="polite">
+  {% if flash_message %}
+    <div class="flash-banner{% if flash_kind %} is-{{ flash_kind }}{% endif %}" role="{% if flash_kind == 'error' %}alert{% else %}status{% endif %}">
+      {{ flash_message }}
+      {% if error_code %}<span class="flash-code">{{ error_code }}</span>{% endif %}
+    </div>
+  {% else %}
+    <div class="flash-banner is-empty">No active messages.</div>
+  {% endif %}
+</section>

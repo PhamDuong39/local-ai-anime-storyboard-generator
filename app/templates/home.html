@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card hero">
+    <h2>Storyboard generation, kept local.</h2>
+    <p>
+      Upload a Markdown story, add one reference image per character, review the
+      generated scenes, and export ordered storyboard frames from a local FastAPI app.
+    </p>
+    <div class="status-row">
+      <span class="status-pill">FastAPI</span>
+      <span class="status-pill">Jinja2</span>
+      <span class="status-pill">HTMX</span>
+      <span class="status-pill">Windows-first</span>
+    </div>
+    <div class="actions">
+      <a class="button" href="/projects/new">Create new project</a>
+    </div>
+  </section>
+{% endblock %}
