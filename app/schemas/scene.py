@@ -27,7 +27,7 @@ class Scene(BaseModel):
     main_action: str = Field(min_length=1)
     camera_shot: str = Field(min_length=1)
     camera_angle: str = Field(min_length=1)
-    visual_details: list[str] = Field(min_length=1)
+    visual_details: list[str] = Field(min_length=3, max_length=8)
     continuity_notes: list[str] = Field(default_factory=list)
     status: SceneStatus = SceneStatus.DRAFT
 
@@ -42,14 +42,19 @@ class SceneList(BaseModel):
     scene_count: int = Field(ge=0)
     scenes: list[Scene]
 
+    @property
+    def active_scenes(self) -> list[Scene]:
+        """Scenes eligible for approval, prompting, and image generation."""
+        return [scene for scene in self.scenes if scene.status is not SceneStatus.SKIPPED]
+
     @model_validator(mode="after")
     def validate_scene_order(self) -> "SceneList":
         if self.scene_count != len(self.scenes):
             raise ValueError("scene_count must match the number of scenes")
         if len({scene.scene_id for scene in self.scenes}) != len(self.scenes):
             raise ValueError("scene IDs must be unique")
-        if [scene.scene_number for scene in self.scenes] != list(
-            range(1, len(self.scenes) + 1)
+        if [scene.scene_number for scene in self.active_scenes] != list(
+            range(1, len(self.active_scenes) + 1)
         ):
-            raise ValueError("scene numbers must be sequential and 1-based")
+            raise ValueError("active scene numbers must be sequential and 1-based")
         return self

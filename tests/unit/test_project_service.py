@@ -5,8 +5,8 @@ import pytest
 from app.core.errors import AppError
 from app.core.file_io import read_json
 from app.schemas.generation import GenerationSettings
-from app.schemas.project import ProjectMetadata
-from app.services.project_service import ProjectService
+from app.schemas.project import ProjectMetadata, ProjectStatus
+from app.services.project_service import ProjectService, workflow_for_status
 
 
 def make_service(tmp_path):
@@ -59,3 +59,33 @@ def test_create_project_builds_folders_and_valid_metadata(tmp_path) -> None:
 def test_create_project_rejects_unknown_preset(tmp_path) -> None:
     with pytest.raises(AppError, match="available output presets"):
         make_service(tmp_path).create_project("Akira", "legacy_preset")
+
+
+@pytest.mark.parametrize(
+    ("status", "current_step", "path_suffix"),
+    [
+        (ProjectStatus.CREATED, "story", "story"),
+        (ProjectStatus.STORY_UPLOAD_FAILED, "story", "story"),
+        (ProjectStatus.STORY_UPLOADED, "characters", "characters"),
+        (ProjectStatus.CHARACTER_VALIDATION_FAILED, "characters", "characters"),
+        (ProjectStatus.CHARACTERS_UPLOADED, "scenes", "scenes"),
+        (ProjectStatus.SCENE_SPLITTING_FAILED, "scenes", "scenes"),
+        (ProjectStatus.SCENES_GENERATED, "scenes", "scenes"),
+        (ProjectStatus.SCENES_APPROVED, "prompts", "prompts"),
+        (ProjectStatus.PROMPT_GENERATION_FAILED, "prompts", "prompts"),
+        (ProjectStatus.PROMPTS_GENERATED, "generation", "generation"),
+        (ProjectStatus.GENERATION_RUNNING, "generation", "generation"),
+        (ProjectStatus.GENERATION_FAILED, "generation", "generation"),
+        (ProjectStatus.GENERATION_PARTIAL, "outputs", "outputs"),
+        (ProjectStatus.GENERATION_COMPLETED, "outputs", "outputs"),
+    ],
+)
+def test_workflow_for_status_maps_every_project_state(
+    status: ProjectStatus, current_step: str, path_suffix: str
+) -> None:
+    workflow = workflow_for_status(status)
+
+    assert workflow.current_step == current_step
+    assert workflow.next_url("akira-123abc") == (
+        f"/projects/akira-123abc/{path_suffix}"
+    )

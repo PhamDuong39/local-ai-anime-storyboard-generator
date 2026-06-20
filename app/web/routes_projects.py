@@ -7,7 +7,11 @@ from fastapi.templating import Jinja2Templates
 from app.core.config import Settings, get_settings
 from app.core.errors import AppError
 from app.schemas.project import OutputPresetId
-from app.services.project_service import OUTPUT_PRESETS, ProjectService
+from app.services.project_service import (
+    OUTPUT_PRESETS,
+    ProjectService,
+    workflow_for_status,
+)
 
 
 router = APIRouter()
@@ -81,8 +85,14 @@ async def create_project(
 @router.get("/projects/{project_id}", response_class=HTMLResponse)
 async def project_dashboard(request: Request, project_id: str) -> HTMLResponse:
     project = _service(get_settings()).get_project(project_id)
+    workflow = workflow_for_status(project.status)
     return templates.TemplateResponse(
         request=request,
         name="project_dashboard.html",
-        context={"page_title": project.project_name, "project": project},
+        context={
+            "page_title": project.project_name,
+            "project": project,
+            "workflow": workflow,
+            "next_url": workflow.next_url(project.project_id),
+        },
     )

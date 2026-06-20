@@ -7,10 +7,11 @@
     {% if project.description %}<p class="muted">{{ project.description }}</p>{% endif %}
     <dl class="project-facts">
       <div><dt>Status</dt><dd>{{ project.status.value }}</dd></div>
+      <div><dt>Current step</dt><dd>{{ workflow.step_title }}</dd></div>
       <div><dt>Output</dt><dd>{{ project.output_preset.name }} — {{ project.output_preset.width }}×{{ project.output_preset.height }}</dd></div>
     </dl>
     <div class="actions">
-      <a class="button" href="/projects/{{ project.project_id }}/story">Continue to story upload</a>
+      <a class="button" href="{{ next_url }}">{{ workflow.action_label }}</a>
     </div>
   </section>
 {% endblock %}

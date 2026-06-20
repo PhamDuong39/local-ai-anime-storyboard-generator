@@ -1,6 +1,7 @@
 import re
 import shutil
 import unicodedata
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal
@@ -18,7 +19,12 @@ from app.schemas.generation import (
     HardwareSettings,
     ImageModelSettings,
 )
-from app.schemas.project import OutputPreset, OutputPresetId, ProjectMetadata
+from app.schemas.project import (
+    OutputPreset,
+    OutputPresetId,
+    ProjectMetadata,
+    ProjectStatus,
+)
 
 
 DEFAULT_NEGATIVE_PROMPT = (
@@ -72,6 +78,70 @@ OUTPUT_PRESETS: dict[OutputPresetId, OutputPreset] = {
         aspect_ratio="9:16",
     ),
 }
+
+
+@dataclass(frozen=True)
+class ProjectWorkflow:
+    current_step: str
+    step_title: str
+    action_label: str
+    path_suffix: str
+
+    def next_url(self, project_id: str) -> str:
+        return f"/projects/{project_id}/{self.path_suffix}"
+
+
+PROJECT_WORKFLOWS: dict[ProjectStatus, ProjectWorkflow] = {
+    ProjectStatus.CREATED: ProjectWorkflow(
+        "story", "Upload your story", "Upload story", "story"
+    ),
+    ProjectStatus.STORY_UPLOAD_FAILED: ProjectWorkflow(
+        "story", "Upload your story", "Try story upload again", "story"
+    ),
+    ProjectStatus.STORY_UPLOADED: ProjectWorkflow(
+        "characters", "Upload character images", "Add characters", "characters"
+    ),
+    ProjectStatus.CHARACTER_VALIDATION_FAILED: ProjectWorkflow(
+        "characters", "Upload character images", "Fix character images", "characters"
+    ),
+    ProjectStatus.CHARACTERS_UPLOADED: ProjectWorkflow(
+        "scenes", "Split your story into scenes", "Continue to scenes", "scenes"
+    ),
+    ProjectStatus.SCENE_SPLITTING_FAILED: ProjectWorkflow(
+        "scenes", "Split your story into scenes", "Try scene splitting again", "scenes"
+    ),
+    ProjectStatus.SCENES_GENERATED: ProjectWorkflow(
+        "scenes", "Review your scenes", "Review scenes", "scenes"
+    ),
+    ProjectStatus.SCENES_APPROVED: ProjectWorkflow(
+        "prompts", "Generate image prompts", "Continue to prompts", "prompts"
+    ),
+    ProjectStatus.PROMPT_GENERATION_FAILED: ProjectWorkflow(
+        "prompts", "Generate image prompts", "Try prompt generation again", "prompts"
+    ),
+    ProjectStatus.PROMPTS_GENERATED: ProjectWorkflow(
+        "generation",
+        "Generate storyboard images",
+        "Continue to generation",
+        "generation",
+    ),
+    ProjectStatus.GENERATION_RUNNING: ProjectWorkflow(
+        "generation", "Generation in progress", "View generation progress", "generation"
+    ),
+    ProjectStatus.GENERATION_FAILED: ProjectWorkflow(
+        "generation", "Generation needs attention", "Review generation", "generation"
+    ),
+    ProjectStatus.GENERATION_PARTIAL: ProjectWorkflow(
+        "outputs", "Review generated images", "Review outputs", "outputs"
+    ),
+    ProjectStatus.GENERATION_COMPLETED: ProjectWorkflow(
+        "outputs", "Review generated images", "View outputs", "outputs"
+    ),
+}
+
+
+def workflow_for_status(status: ProjectStatus) -> ProjectWorkflow:
+    return PROJECT_WORKFLOWS[status]
 
 
 def _slugify(value: str) -> str:

@@ -34,7 +34,7 @@ SCENE = {
     "main_action": "Akira walks through the gate",
     "camera_shot": "wide shot",
     "camera_angle": "low angle",
-    "visual_details": ["rusted gate", "orange light"],
+    "visual_details": ["rusted gate", "orange light", "empty courtyard"],
     "continuity_notes": ["same outfit"],
     "status": "draft",
 }
@@ -83,7 +83,7 @@ def test_story_schema_accepts_documented_legacy_count_but_serializes_canonical_n
             "approx_word_count": 12,
             "line_count": 4,
             "uploaded_at": NOW,
-            "content_hash": "sha256:abc",
+            "content_hash": f"sha256:{'a' * 64}",
         }
     )
 

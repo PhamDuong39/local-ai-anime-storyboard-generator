@@ -2,7 +2,9 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 
 from app.core.config import Settings
+from app.core.file_io import read_json, write_json
 from app.main import app
+from app.schemas.project import ProjectStatus
 from app.web import routes_projects
 
 
@@ -85,3 +87,49 @@ async def test_get_project_dashboard(monkeypatch, tmp_path) -> None:
     assert response.status_code == 200
     assert "Akira" in response.text
     assert "Low VRAM Preview" in response.text
+    assert "Upload your story" in response.text
+    assert f'href="/projects/{project_id}/story"' in response.text
+
+
+@pytest.mark.asyncio
+async def test_project_dashboard_shows_next_step_for_saved_status(
+    monkeypatch, tmp_path
+) -> None:
+    configure_projects_root(monkeypatch, tmp_path)
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        create_response = await client.post(
+            "/projects",
+            data={"project_name": "Akira", "output_preset": "youtube_standard"},
+            follow_redirects=False,
+        )
+        project_id = create_response.headers["location"].split("/")[2]
+        project_path = tmp_path / "projects" / project_id / "metadata/project.json"
+        project_data = read_json(project_path)
+        project_data["status"] = ProjectStatus.SCENES_APPROVED.value
+        write_json(project_path, project_data)
+
+        response = await client.get(f"/projects/{project_id}")
+
+    assert response.status_code == 200
+    assert "Generate image prompts" in response.text
+    assert f'href="/projects/{project_id}/prompts"' in response.text
+
+
+@pytest.mark.asyncio
+async def test_missing_project_dashboard_returns_friendly_error(
+    monkeypatch, tmp_path
+) -> None:
+    configure_projects_root(monkeypatch, tmp_path)
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        response = await client.get("/projects/missing-project")
+
+    assert response.status_code == 404
+    assert "This project could not be found." in response.text
+    assert "PROJECT_NOT_FOUND" in response.text
+    assert "Traceback" not in response.text
