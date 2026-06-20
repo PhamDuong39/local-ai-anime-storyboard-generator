@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card">
+    <p class="eyebrow">Characters · {{ project.project_name }}</p>
+    <h2>Upload character references</h2>
+    <p class="muted">
+      Upload one full-body image for each main character. Name each file exactly like
+      the character name in your story, for example Akira.png.
+    </p>
+    <p class="muted">
+      The app will try to preserve each character's face, outfit, and visual identity
+      using the uploaded reference. Results are best-effort and may vary by pose,
+      scene, and model. For Phase 1, each character is expected to keep the same outfit.
+    </p>
+
+    <form
+      action="/projects/{{ project.project_id }}/characters"
+      method="post"
+      enctype="multipart/form-data"
+      class="form-stack"
+      hx-post="/projects/{{ project.project_id }}/characters"
+      hx-encoding="multipart/form-data"
+      hx-target="#character-validation"
+      hx-swap="outerHTML"
+    >
+      <label>
+        <span>Character images</span>
+        <input
+          type="file"
+          name="character_files"
+          accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
+          multiple
+          required
+        >
+        <small class="muted">PNG is recommended. JPG, JPEG, and WEBP are also supported.</small>
+      </label>
+
+      <div class="actions">
+        <button type="submit">Upload and validate characters</button>
+        <a href="/projects/{{ project.project_id }}/story">Back to story</a>
+      </div>
+    </form>
+  </section>
+
+  {% include "partials/_character_validation.html" %}
+{% endblock %}

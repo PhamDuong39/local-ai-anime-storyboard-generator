@@ -1,0 +1,40 @@
+<article id="{{ scene.scene_id }}" class="card scene-card{% if scene.status.value == 'skipped' %} is-skipped{% endif %}">
+  {% if flash_message %}
+    <div class="flash-banner{% if flash_kind %} is-{{ flash_kind }}{% endif %}" role="{% if flash_kind == 'error' %}alert{% else %}status{% endif %}">
+      {{ flash_message }}
+      {% if error_code %}<span class="flash-code">{{ error_code }}</span>{% endif %}
+    </div>
+  {% endif %}
+  <div class="scene-card-heading">
+    <div>
+      <p class="eyebrow">Scene {{ scene.scene_number }} · {{ scene.scene_id }}</p>
+      <h2>{{ scene.title }}</h2>
+    </div>
+    <span class="status-pill">{{ scene.status.value | replace("_", " ") }}</span>
+  </div>
+
+  <form class="form-stack" action="/projects/{{ project.project_id }}/scenes/{{ scene.scene_id }}" method="post" hx-post="/projects/{{ project.project_id }}/scenes/{{ scene.scene_id }}" hx-target="#{{ scene.scene_id }}" hx-swap="outerHTML">
+    <label><span>Title</span><input name="title" maxlength="80" required value="{{ scene.title }}"></label>
+    <label><span>Summary</span><textarea name="summary" rows="3" required>{{ scene.summary }}</textarea></label>
+    <label><span>Source excerpt</span><textarea name="source_excerpt" rows="3" required>{{ scene.source_excerpt }}</textarea></label>
+    <div class="scene-fields-grid">
+      <label><span>Characters</span><input name="characters" value="{{ scene.characters | join(', ') }}"></label>
+      <label><span>Location</span><input name="location" required value="{{ scene.location }}"></label>
+      <label><span>Time of day</span><input name="time_of_day" required value="{{ scene.time_of_day }}"></label>
+      <label><span>Mood</span><input name="mood" required value="{{ scene.mood }}"></label>
+      <label><span>Main action</span><input name="main_action" required value="{{ scene.main_action }}"></label>
+      <label><span>Camera shot</span><input name="camera_shot" required value="{{ scene.camera_shot }}"></label>
+      <label><span>Camera angle</span><input name="camera_angle" required value="{{ scene.camera_angle }}"></label>
+    </div>
+    <label><span>Visual details (3–8, one per line)</span><textarea name="visual_details" rows="4" required>{{ scene.visual_details | join('\n') }}</textarea></label>
+    <label><span>Continuity notes (one per line)</span><textarea name="continuity_notes" rows="3">{{ scene.continuity_notes | join('\n') }}</textarea></label>
+    <div class="actions">
+      <button type="submit" {% if scene.status.value == 'skipped' %}disabled{% endif %}>Save scene</button>
+    </div>
+  </form>
+  {% if scene.status.value != "skipped" %}
+    <form action="/projects/{{ project.project_id }}/scenes/{{ scene.scene_id }}/skip" method="post" hx-post="/projects/{{ project.project_id }}/scenes/{{ scene.scene_id }}/skip" hx-target="#scene-list" hx-swap="outerHTML">
+      <button type="submit" class="button-danger">Skip scene</button>
+    </form>
+  {% endif %}
+</article>

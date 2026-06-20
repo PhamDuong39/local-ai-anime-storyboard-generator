@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "characters": [
+    {
+      "name": "7596f958943d1b63422c",
+      "original_filename": "7596f958943d1b63422c.jpg",
+      "stored_path": "input/characters/7596f958943d1b63422c.jpg",
+      "mime_type": "image/jpeg",
+      "width": 895,
+      "height": 780,
+      "file_size_bytes": 48923,
+      "is_full_body_expected": true,
+      "consistency_method": "ip-adapter-faceid",
+      "status": "warning",
+      "warnings": [
+        "NON_PREFERRED_FORMAT"
+      ]
+    }
+  ]
+}

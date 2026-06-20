@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card">
+    <p class="eyebrow">Story · {{ project.project_name }}</p>
+    <h2>Upload your story</h2>
+    <p class="muted">
+      Choose a free-form Markdown file. You can write normal prose, dialogue, headings,
+      and notes—no scene tags or special formatting are required.
+    </p>
+
+    <form
+      action="/projects/{{ project.project_id }}/story"
+      method="post"
+      enctype="multipart/form-data"
+      class="form-stack"
+      hx-post="/projects/{{ project.project_id }}/story"
+      hx-encoding="multipart/form-data"
+      hx-target="#story-validation"
+      hx-swap="outerHTML"
+    >
+      <label>
+        <span>Markdown story</span>
+        <input type="file" name="story_file" accept=".md,text/markdown,text/plain" required>
+        <small class="muted">One UTF-8 .md file, up to 1 MB.</small>
+      </label>
+
+      <div class="actions">
+        <button type="submit">Upload and validate story</button>
+        <a href="/projects/{{ project.project_id }}">Back to project</a>
+      </div>
+    </form>
+  </section>
+
+  {% include "partials/_story_validation.html" %}
+{% endblock %}

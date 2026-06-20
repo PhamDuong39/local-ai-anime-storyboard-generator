@@ -1,0 +1,66 @@
+<section id="scene-list" class="scene-list" aria-live="polite">
+  {% if flash_message %}
+    <div class="flash-banner{% if flash_kind %} is-{{ flash_kind }}{% endif %}" role="{% if flash_kind == 'error' %}alert{% else %}status{% endif %}">
+      {{ flash_message }}
+      {% if error_code %}<span class="flash-code">{{ error_code }}</span>{% endif %}
+    </div>
+  {% endif %}
+
+  {% if scenes %}
+    <div class="scene-summary card">
+      <div>
+        <h2>{{ active_count }} active scene{% if active_count != 1 %}s{% endif %}</h2>
+        <p class="muted">Scene IDs remain stable when the display order changes.</p>
+      </div>
+      <form action="/projects/{{ project.project_id }}/scenes/approve" method="post" hx-post="/projects/{{ project.project_id }}/scenes/approve" hx-target="#scene-list">
+        <button type="submit" {% if active_count == 0 %}disabled{% endif %}>Approve scenes</button>
+      </form>
+    </div>
+
+    {% for scene in scenes %}
+      {% set position = loop.index0 %}
+      {% include "partials/_scene_card.html" %}
+      <div class="scene-order-actions">
+        {% if position > 0 %}
+          <form hx-post="/projects/{{ project.project_id }}/scenes/reorder" hx-target="#scene-list" hx-swap="outerHTML" method="post" action="/projects/{{ project.project_id }}/scenes/reorder">
+            {% for item in scenes %}
+              {% if loop.index0 == position - 1 %}
+                <input type="hidden" name="scene_ids" value="{{ scenes[position].scene_id }}">
+              {% elif loop.index0 == position %}
+                <input type="hidden" name="scene_ids" value="{{ scenes[position - 1].scene_id }}">
+              {% else %}
+                <input type="hidden" name="scene_ids" value="{{ item.scene_id }}">
+              {% endif %}
+            {% endfor %}
+            <button type="submit" class="button-secondary">Move up</button>
+          </form>
+        {% endif %}
+        {% if position < scenes|length - 1 %}
+          <form hx-post="/projects/{{ project.project_id }}/scenes/reorder" hx-target="#scene-list" hx-swap="outerHTML" method="post" action="/projects/{{ project.project_id }}/scenes/reorder">
+            {% for item in scenes %}
+              {% if loop.index0 == position %}
+                <input type="hidden" name="scene_ids" value="{{ scenes[position + 1].scene_id }}">
+              {% elif loop.index0 == position + 1 %}
+                <input type="hidden" name="scene_ids" value="{{ scenes[position].scene_id }}">
+              {% else %}
+                <input type="hidden" name="scene_ids" value="{{ item.scene_id }}">
+              {% endif %}
+            {% endfor %}
+            <button type="submit" class="button-secondary">Move down</button>
+          </form>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <section class="card">
+      <h2>No scenes yet</h2>
+      <p class="muted">The local mock analyzer will create a reviewable draft without calling OpenAI.</p>
+      <form action="/projects/{{ project.project_id }}/scenes/split" method="post" hx-post="/projects/{{ project.project_id }}/scenes/split" hx-target="#scene-list" hx-swap="outerHTML">
+        <div class="actions">
+          <button type="submit">Analyze Story and Split Scenes</button>
+          <a href="/projects/{{ project.project_id }}/characters">Back to characters</a>
+        </div>
+      </form>
+    </section>
+  {% endif %}
+</section>

@@ -1,0 +1,40 @@
+<section id="story-validation" class="card" aria-live="polite">
+  <h2>Story validation</h2>
+
+  {% if flash_message %}
+    <div class="flash-banner{% if flash_kind %} is-{{ flash_kind }}{% endif %}" role="{% if flash_kind == 'error' %}alert{% else %}status{% endif %}">
+      {{ flash_message }}
+      {% if error_code %}<span class="flash-code">{{ error_code }}</span>{% endif %}
+    </div>
+  {% endif %}
+
+  {% if story %}
+    <div class="status-row">
+      <span class="status-pill">Valid Markdown</span>
+      <span class="status-pill">{{ story.story_char_count }} characters</span>
+      <span class="status-pill">About {{ story.approx_word_count }} words</span>
+    </div>
+
+    <dl class="project-facts story-facts">
+      <div><dt>File</dt><dd>{{ story.original_filename }}</dd></div>
+      <div><dt>Lines</dt><dd>{{ story.line_count }}</dd></div>
+      <div><dt>Encoding</dt><dd>UTF-8</dd></div>
+    </dl>
+
+    <div class="story-preview">
+      <h3>Preview</h3>
+      <pre>{{ story_preview }}</pre>
+      {% if story.story_char_count > 2000 %}
+        <p class="muted">Showing the first 2,000 characters.</p>
+      {% endif %}
+    </div>
+
+    <div class="actions">
+      <a class="button" href="/projects/{{ project.project_id }}/characters">
+        Continue to Character Upload
+      </a>
+    </div>
+  {% elif not flash_message %}
+    <p class="muted">Upload a story to see its validation result and preview here.</p>
+  {% endif %}
+</section>

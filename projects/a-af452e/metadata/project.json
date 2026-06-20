@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "project_id": "a-af452e",
+  "project_name": "a",
+  "description": "",
+  "status": "SCENES_APPROVED",
+  "output_preset": {
+    "id": "youtube_standard",
+    "name": "YouTube Standard",
+    "width": 1280,
+    "height": 720,
+    "aspect_ratio": "16:9"
+  },
+  "created_at": "2026-06-20T17:43:45.663371Z",
+  "updated_at": "2026-06-20T18:01:24.104578Z"
+}

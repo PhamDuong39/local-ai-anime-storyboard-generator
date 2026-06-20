@@ -1,0 +1,42 @@
+<section id="character-validation" class="card" aria-live="polite">
+  <h2>Character validation</h2>
+
+  {% if flash_message %}
+    <div class="flash-banner{% if flash_kind %} is-{{ flash_kind }}{% endif %}" role="{% if flash_kind == 'error' %}alert{% else %}status{% endif %}">
+      {{ flash_message }}
+      {% if error_code %}<span class="flash-code">{{ error_code }}</span>{% endif %}
+    </div>
+  {% endif %}
+
+  {% if characters %}
+    <div class="project-facts">
+      {% for character in characters %}
+        <div>
+          <dt>{{ character.name }}</dt>
+          <dd>{{ character.original_filename }}</dd>
+          <dd>{{ character.width }} × {{ character.height }} px</dd>
+          <dd>
+            <span class="status-pill">
+              {% if character.status.value == "valid" %}Ready{% else %}Ready with warnings{% endif %}
+            </span>
+          </dd>
+          {% if character.warnings %}
+            <ul>
+              {% for warning in character.warnings %}
+                <li>{{ warning_messages.get(warning, warning) }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="actions">
+      <a class="button" href="/projects/{{ project.project_id }}/scenes">
+        Continue to Scene Review
+      </a>
+    </div>
+  {% elif not flash_message %}
+    <p class="muted">Upload character images to see their validation results here.</p>
+  {% endif %}
+</section>

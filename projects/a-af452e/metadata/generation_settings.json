@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "project_id": "a-af452e",
+  "output_preset": {
+    "id": "youtube_standard",
+    "name": "YouTube Standard",
+    "width": 1280,
+    "height": 720,
+    "aspect_ratio": "16:9"
+  },
+  "generation_mode": "auto",
+  "image_model": {
+    "primary_pipeline": "sdxl",
+    "image_model_id": "stabilityai/stable-diffusion-xl-base-1.0",
+    "low_vram_image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5"
+  },
+  "defaults": {
+    "num_images_per_scene": 1,
+    "num_inference_steps": 30,
+    "guidance_scale": 7.0,
+    "seed_policy": "random_per_scene",
+    "scheduler": "default",
+    "negative_prompt": "low quality, blurry, pixelated, distorted face, asymmetrical eyes, bad anatomy, bad hands, extra fingers, missing fingers, duplicate character, inconsistent outfit, inconsistent hairstyle, text, subtitle, speech bubble, watermark, logo, cropped face, cropped body"
+  },
+  "hardware": {
+    "device": "unknown",
+    "gpu_name": "",
+    "vram_gb": 0.0,
+    "cuda_available": false,
+    "torch_dtype": "unknown",
+    "hardware_profile": "unknown",
+    "detected_at": "2026-06-20T17:43:45.663371Z"
+  },
+  "character_consistency": {
+    "method": "ip-adapter-faceid",
+    "enable_mode": "auto",
+    "enabled": false,
+    "disabled_reason": "hardware_not_detected",
+    "fallback": "prompt_based_character_hints"
+  },
+  "safety": {
+    "force_low_vram_mode": false,
+    "continue_on_scene_failure": true,
+    "overwrite_existing_outputs": false
+  },
+  "updated_at": "2026-06-20T17:43:45.663371Z"
+}

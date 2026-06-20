@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card">
+    <p class="eyebrow">Scenes · {{ project.project_name }}</p>
+    <h2>Review your storyboard scenes</h2>
+    <p class="muted">
+      Analyze the story, then edit, reorder, or skip scenes before approval.
+      Image generation stays locked until this scene list is explicitly approved.
+    </p>
+    {% if missing_character_names %}
+      <div class="flash-banner" role="status">
+        Missing character references: {{ missing_character_names | join(", ") }}.
+        You can return to character upload before approving.
+      </div>
+    {% endif %}
+  </section>
+
+  {% include "partials/_scene_list.html" %}
+{% endblock %}

@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "project_id": "a-af452e",
+  "story_title": "VideoHub — Design Summary",
+  "language": "unknown",
+  "scene_count": 3,
+  "scenes": [
+    {
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "title": "Story opening",
+      "source_excerpt": "---\n\n---\n\n| Role | Mô tả |\n|---|---|\n| Guest | Chưa đăng nhập — chỉ xem video Public, không tương tác |\n| User | Đã đăng nhập — vừa là Viewer vừa là Creator, sở hữu 1 kênh |\n| Admin | Quản trị viên — quản lý nội dung và tài khoản |\n\nKhông có role riêng biệt Viewer / Creator. Mọi User đều có thể upload và xem.\n\n---\n\n- Keycloak đứng độc lập (single realm: `videohub`)\n- Hỗ trợ đăng ký username/password và đăng nhập qua **Google OAuth2**\n- Flow: Authorization Code + PKCE (browser), Client Credentials (service-to-service)\n- Clients: `studio-app`, `viewing-app`, `admin-app`\n- Roles quản lý trong Key",
+      "summary": "--- --- | Role | Mô tả | |---|---| | Guest | Chưa đăng nhập — chỉ xem video Public, không tương tác | | User | Đã đăng nhập — vừa là Viewer vừa là Creator, sở hữu 1 kênh | | Admin | Quản trị viên — quản lý nội dung và tài khoản | Không có role riêng biệt Viewer / Creator. Mọi Use",
+      "characters": [
+        "7596f958943d1b63422c"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "--- --- | Role | Mô tả | |---|---| | Guest | Chưa đăng nhập — chỉ xem video Public, không tương tác | | User | Đã đăng nhập — vừa là Viewer vừa là Creator, sở hữu 1 kênh | | Admin | Quản trị viên — quản lý nội dung và tài khoản | Không có role riêng biệt Viewer / Creator. Mọi Use",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep 7596f958943d1b63422c's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    },
+    {
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "title": "Story development",
+      "source_excerpt": "**Site 1 — Studio (Upload Site):**\n- Upload video (title, description, thumbnail, tag, visibility)\n- Quản lý danh sách video (bao gồm PRIVATE, PROCESSING, FAILED)\n- Chỉnh sửa metadata / thumbnail / visibility\n- Xóa video\n- Xem analytics từng video\n- Cài đặt kênh (tên, avatar, mô tả)\n\n**Site 2 — Viewing Site:**\n- Trang Home với feed video\n- Tìm kiếm & lọc theo tag\n- Trang xem video (player + like/dislike/comment/subscribe/report)\n- Trang kênh Creator\n- Watch history & resume\n- In-app notifications\n\n---\n\n- Monetization / quảng cáo\n- Subtitle / phụ đề tự động\n- Bulk upload\n- Playlist\n- Video liên",
+      "summary": "**Site 1 — Studio (Upload Site):** - Upload video (title, description, thumbnail, tag, visibility) - Quản lý danh sách video (bao gồm PRIVATE, PROCESSING, FAILED) - Chỉnh sửa metadata / thumbnail / visibility - Xóa video - Xem analytics từng video - Cài đặt kênh (tên, avatar, mô",
+      "characters": [
+        "7596f958943d1b63422c"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "**Site 1 — Studio (Upload Site):** - Upload video (title, description, thumbnail, tag, visibility) - Quản lý danh sách video (bao gồm PRIVATE, PROCESSING, FAILED) - Chỉnh sửa metadata / thumbnail / visibility - Xóa video - Xem analytics từng video - Cài đặt kênh (tên, avatar, mô",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep 7596f958943d1b63422c's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    },
+    {
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "title": "Story conclusion",
+      "source_excerpt": "Transcode Worker:\n→ Kafka: publish video.ready { videoId, channelId, duration, thumbnailUrl }\n\nVideo Service (consumer):\n→ DB: video.status = READY\n→ DB: update metadata (duration, thumbnail_url)\n→ In-app notify: Creator + Subscribers\n```\n\n---\n\n```\nBrowser (HLS.js) ──① metadata──→ Video Service (check Redis cache)\n                 ←──② signed URL (master.m3u8, TTL 6h)──\n                 ──③ fetch segments──→ Cloudflare CDN\n                                        ── cache miss──→ MinIO origin\n\nHeartbeat (mỗi 10s): POST position_ms → Watch History API\n  → Write Redis ngay\n  → Async flush → Postg",
+      "summary": "Transcode Worker: → Kafka: publish video.ready { videoId, channelId, duration, thumbnailUrl } Video Service (consumer): → DB: video.status = READY → DB: update metadata (duration, thumbnail_url) → In-app notify: Creator + Subscribers ``` --- ``` Browser (HLS.js) ──① metadata──→ V",
+      "characters": [
+        "7596f958943d1b63422c"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "Transcode Worker: → Kafka: publish video.ready { videoId, channelId, duration, thumbnailUrl } Video Service (consumer): → DB: video.status = READY → DB: update metadata (duration, thumbnail_url) → In-app notify: Creator + Subscribers ``` --- ``` Browser (HLS.js) ──① metadata──→ V",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep 7596f958943d1b63422c's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    }
+  ]
+}
