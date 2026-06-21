@@ -1,6 +1,6 @@
 from enum import Enum
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from app.schemas.character import ConsistencyMethod
 from app.schemas.project import OutputPreset
@@ -45,6 +45,14 @@ class Prompt(BaseModel):
     status: PromptStatus
     manual_edit: bool = False
 
+    @field_validator("positive_prompt", "negative_prompt")
+    @classmethod
+    def prompt_text_must_not_be_blank(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("prompt text must not be blank")
+        return value
+
 
 class PromptList(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -61,4 +69,16 @@ class PromptList(BaseModel):
         scene_ids = [prompt.scene_id for prompt in self.prompts]
         if len(set(scene_ids)) != len(scene_ids):
             raise ValueError("each scene must map to exactly one prompt")
+        scene_numbers = [prompt.scene_number for prompt in self.prompts]
+        if len(set(scene_numbers)) != len(scene_numbers):
+            raise ValueError("prompt scene numbers must be unique")
+        if scene_numbers != list(range(1, len(self.prompts) + 1)):
+            raise ValueError("prompts must be ordered sequentially from scene 1")
+        for prompt in self.prompts:
+            settings = prompt.generation_settings
+            if (
+                settings.width != self.output_preset.width
+                or settings.height != self.output_preset.height
+            ):
+                raise ValueError("prompt dimensions must match the output preset")
         return self

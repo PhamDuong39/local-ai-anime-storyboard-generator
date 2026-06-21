@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "project_id": "abc-a5fd49",
+  "story_title": "Tech Stack — VideoHUB Phase 1",
+  "language": "unknown",
+  "scene_count": 3,
+  "scenes": [
+    {
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "title": "Story opening",
+      "source_excerpt": "VideoHUB Phase 1 uses a self-hosted, cost-optimized, event-driven architecture focused on proving the full media lifecycle: large chunked upload, durable object storage, asynchronous FFmpeg processing, HLS playback, and creator-owned video management. The platform avoids expensive managed media services in Phase 1 by using MinIO for S3-compatible storage, Kafka for media workflow events, PostgreSQL for transactional state, Redis for lightweight coordination/idempotency, and Keycloak for identity. The backend remains stateless by streaming upload chunks and merge output through object storage i",
+      "summary": "VideoHUB Phase 1 uses a self-hosted, cost-optimized, event-driven architecture focused on proving the full media lifecycle: large chunked upload, durable object storage, asynchronous FFmpeg processing, HLS playback, and creator-owned video management. The platform avoids expensiv",
+      "characters": [
+        "7596f958943d1b63422c"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "VideoHUB Phase 1 uses a self-hosted, cost-optimized, event-driven architecture focused on proving the full media lifecycle: large chunked upload, durable object storage, asynchronous FFmpeg processing, HLS playback, and creator-owned video management. The platform avoids expensiv",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep 7596f958943d1b63422c's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    },
+    {
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "title": "Story development",
+      "source_excerpt": "| Service Name | Image Pin | Port Suggestion | Notes |\n|---|---|---:|---|\n| `postgres` | `postgres:18.4` | `5432` | One database for app, separate Keycloak database/schema recommended. |\n| `redis` | `redis:8.0.18` | `6379` | Enable append-only file only if local debugging needs persistence. |\n| `zookeeper` | `zookeeper:3.9.5` | `2181` | Single-node local only. |\n| `kafka` | `bitnami/kafka:3.9.2` or equivalent Apache Kafka 3.9.2 image | `9092` | Configure external listener for host development. |\n| `minio` | `minio/minio:RELEASE.2025-10-15T17-29-55Z` | `9000`, `9001` | Console on 9001. Pre-crea",
+      "summary": "| Service Name | Image Pin | Port Suggestion | Notes | |---|---|---:|---| | `postgres` | `postgres:18.4` | `5432` | One database for app, separate Keycloak database/schema recommended. | | `redis` | `redis:8.0.18` | `6379` | Enable append-only file only if local debugging needs p",
+      "characters": [
+        "7596f958943d1b63422c"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "| Service Name | Image Pin | Port Suggestion | Notes | |---|---|---:|---| | `postgres` | `postgres:18.4` | `5432` | One database for app, separate Keycloak database/schema recommended. | | `redis` | `redis:8.0.18` | `6379` | Enable append-only file only if local debugging needs p",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep 7596f958943d1b63422c's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    },
+    {
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "title": "Story conclusion",
+      "source_excerpt": "| Asset | Bucket | Object Key Pattern |\n|---|---|---|\n| Upload chunk | `videohub-temp-uploads` | `{upload_session_id}/chunks/{chunk_index}` |\n| Original video | `videohub-originals` | `{creator_id}/{video_id}/source.{ext}` |\n| HLS master playlist | `videohub-processed` | `{creator_id}/{video_id}/hls/master.m3u8` |\n| 360p playlist | `videohub-processed` | `{creator_id}/{video_id}/hls/360p/index.m3u8` |\n| 720p playlist | `videohub-processed` | `{creator_id}/{video_id}/hls/720p/index.m3u8` |\n| 1080p playlist | `videohub-processed` | `{creator_id}/{video_id}/hls/1080p/index.m3u8` |\n| HLS segment |",
+      "summary": "| Asset | Bucket | Object Key Pattern | |---|---|---| | Upload chunk | `videohub-temp-uploads` | `{upload_session_id}/chunks/{chunk_index}` | | Original video | `videohub-originals` | `{creator_id}/{video_id}/source.{ext}` | | HLS master playlist | `videohub-processed` | `{creato",
+      "characters": [
+        "7596f958943d1b63422c"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "| Asset | Bucket | Object Key Pattern | |---|---|---| | Upload chunk | `videohub-temp-uploads` | `{upload_session_id}/chunks/{chunk_index}` | | Original video | `videohub-originals` | `{creator_id}/{video_id}/source.{ext}` | | HLS master playlist | `videohub-processed` | `{creato",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep 7596f958943d1b63422c's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    }
+  ]
+}
