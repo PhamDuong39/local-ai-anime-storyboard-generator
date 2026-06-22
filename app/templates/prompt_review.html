@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card">
+    <p class="eyebrow">Prompt workflow</p>
+    <h2>Review image prompts</h2>
+    <p class="muted">Prompts are created only from your approved, active scenes.</p>
+  </section>
+  {% include "partials/_prompt_list.html" %}
+{% endblock %}

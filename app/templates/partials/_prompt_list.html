@@ -1,0 +1,24 @@
+<section id="prompt-list" class="prompt-list">
+  {% include "partials/_flash.html" %}
+  {% if prompts %}
+    {% for prompt in prompts %}
+      <article class="card" id="{{ prompt.scene_id }}-prompt">
+        <p class="eyebrow">Scene {{ prompt.scene_number }}</p>
+        <h3>{{ prompt.scene_id }}</h3>
+        <p>{{ prompt.positive_prompt }}</p>
+        <p class="muted">Status: {{ prompt.status.value }}</p>
+      </article>
+    {% endfor %}
+  {% else %}
+    <article class="card">
+      <p>No prompts have been generated yet.</p>
+      <form method="post"
+            action="/projects/{{ project.project_id }}/prompts/generate"
+            hx-post="/projects/{{ project.project_id }}/prompts/generate"
+            hx-target="#prompt-list"
+            hx-swap="outerHTML">
+        <button type="submit" {% if not scenes_approved %}disabled{% endif %}>Generate prompts</button>
+      </form>
+    </article>
+  {% endif %}
+</section>

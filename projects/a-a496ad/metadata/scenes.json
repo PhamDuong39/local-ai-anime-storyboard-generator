@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "project_id": "a-a496ad",
+  "story_title": "00 — Product Decisions",
+  "language": "unknown",
+  "scene_count": 3,
+  "scenes": [
+    {
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "title": "Story opening",
+      "source_excerpt": "**Product name:** Local AI Anime Storyboard Generator\n\n**Phase 1 positioning:** A local AI anime storyboard generator for creators. Users upload a story and character references, review an auto-generated scene list, then generate ordered anime images that are ready for manual video editing.\n\n**Future direction:** Local AI Anime Video Generator.\n\n**Important naming rule:** Phase 1 must not be positioned as a full AI anime video generator. Phase 1 is image/storyboard generation only.\n\n---\n\nThe app is a **local AI anime storyboard/image generator**.\n\nThe user provides:\n\n- One free-form Markdown s",
+      "summary": "**Product name:** Local AI Anime Storyboard Generator **Phase 1 positioning:** A local AI anime storyboard generator for creators. Users upload a story and character references, review an auto-generated scene list, then generate ordered anime images that are ready for manual vide",
+      "characters": [
+        "Screenshot from 2026-06-17 15-37-57"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "**Product name:** Local AI Anime Storyboard Generator **Phase 1 positioning:** A local AI anime storyboard generator for creators. Users upload a story and character references, review an auto-generated scene list, then generate ordered anime images that are ready for manual vide",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep Screenshot from 2026-06-17 15-37-57's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    },
+    {
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "title": "Story development",
+      "source_excerpt": "```text\nDiffusers + SDXL\n```\n\nThe app should use the user's local GPU when available.\n\nCPU fallback may exist, but it is expected to be very slow and should be treated as a fallback, not the recommended path.\n\nMinimum target:\n\n```text\n4GB VRAM\n```\n\nPhase 1 must support image-only generation. If SDXL is too heavy for the user's machine, an SD 1.5 base fallback should be considered.\n\nCharacter consistency is **best effort**.\n\nAllowed product promise:\n\n```text\nThe app should try to preserve the character's face, outfit, and visual identity based on the uploaded full-body reference image.\n```\n\nFor",
+      "summary": "```text Diffusers + SDXL ``` The app should use the user's local GPU when available. CPU fallback may exist, but it is expected to be very slow and should be treated as a fallback, not the recommended path. Minimum target: ```text 4GB VRAM ``` Phase 1 must support image-only gene",
+      "characters": [
+        "Screenshot from 2026-06-17 15-37-57"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "```text Diffusers + SDXL ``` The app should use the user's local GPU when available. CPU fallback may exist, but it is expected to be very slow and should be treated as a fallback, not the recommended path. Minimum target: ```text 4GB VRAM ``` Phase 1 must support image-only gene",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep Screenshot from 2026-06-17 15-37-57's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    },
+    {
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "title": "Story conclusion",
+      "source_excerpt": "```text\n.png\n.jpg\n.jpeg\n.webp\n```\n\nPhase 1 assumes each character wears the same outfit throughout the story.\n\nThis reduces prompt complexity and improves consistency across generated images.\n\nOne character equals one reference image.\n\nThe app should not require multiple reference images, LoRA training, or complex identity setup in Phase 1.\n\n---\n\nThe confirmed Phase 1 workflow is:\n\n```text\n1. User opens local web UI.\n2. User creates a project.\n3. User uploads a free-form story.md file.\n4. User uploads one full-body image per main character.\n5. System validates character filenames.\n6. System se",
+      "summary": "```text .png .jpg .jpeg .webp ``` Phase 1 assumes each character wears the same outfit throughout the story. This reduces prompt complexity and improves consistency across generated images. One character equals one reference image. The app should not require multiple reference im",
+      "characters": [
+        "Screenshot from 2026-06-17 15-37-57"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "```text .png .jpg .jpeg .webp ``` Phase 1 assumes each character wears the same outfit throughout the story. This reduces prompt complexity and improves consistency across generated images. One character equals one reference image. The app should not require multiple reference im",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep Screenshot from 2026-06-17 15-37-57's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    }
+  ]
+}
