@@ -30,6 +30,9 @@ class Settings(BaseSettings):
     openai_api_key: SecretStr | None = None
     openai_scene_model: str = "gpt-5.4-mini"
     openai_prompt_model: str = "gpt-5.4-mini"
+    openai_mock_mode: bool = False
+    openai_context_token_limit: int = 128000
+    openai_request_overhead_tokens: int = 4000
     projects_root: Path = Path("./projects")
     app_host: str = "127.0.0.1"
     app_port: int = 8000

@@ -19,7 +19,21 @@ They hear footsteps approaching from a classroom."""
 
 
 def configure_scene_project(monkeypatch, tmp_path):
-    settings = Settings(projects_root=tmp_path / "projects")
+    settings = Settings(projects_root=tmp_path / "projects", openai_mock_mode=True)
+    monkeypatch.setattr(routes_scenes, "get_settings", lambda: settings)
+    project = ProjectService(
+        settings.projects_root,
+        image_model_id=settings.image_model_id,
+        low_vram_image_model_id=settings.low_vram_image_model_id,
+    ).create_project("Episode One", "youtube_standard")
+    StoryService(settings.projects_root).save_story(
+        project.project_id, "story.md", STORY
+    )
+    return settings, project
+
+
+def configure_real_scene_project_without_key(monkeypatch, tmp_path):
+    settings = Settings(projects_root=tmp_path / "projects", openai_mock_mode=False)
     monkeypatch.setattr(routes_scenes, "get_settings", lambda: settings)
     project = ProjectService(
         settings.projects_root,
@@ -180,3 +194,23 @@ async def test_approve_scenes_updates_status_and_redirects(
         "approved",
     ]
     assert read_json(root / "metadata/project.json")["status"] == "SCENES_APPROVED"
+
+
+@pytest.mark.asyncio
+async def test_real_scene_route_without_api_key_returns_friendly_error(
+    monkeypatch, tmp_path
+) -> None:
+    settings, project = configure_real_scene_project_without_key(monkeypatch, tmp_path)
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        response = await client.post(
+            f"/projects/{project.project_id}/scenes/split",
+            follow_redirects=False,
+        )
+
+    assert response.status_code == 503
+    assert "OPENAI_API_KEY_MISSING" in response.text
+    assert not (
+        settings.projects_root / project.project_id / "metadata/scenes.json"
+    ).exists()

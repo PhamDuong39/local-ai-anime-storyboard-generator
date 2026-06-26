@@ -97,7 +97,12 @@ async def split_scenes(request: Request, project_id: str) -> Response:
     is_htmx = request.headers.get("HX-Request", "").lower() == "true"
     try:
         scene_list = OpenAISceneService(
-            settings.projects_root, mock_mode=True
+            settings.projects_root,
+            mock_mode=settings.openai_mock_mode,
+            model=settings.openai_scene_model,
+            api_key=settings.openai_api_key,
+            context_token_limit=settings.openai_context_token_limit,
+            request_overhead_tokens=settings.openai_request_overhead_tokens,
         ).split_story_into_scenes(project_id)
     except AppError as exc:
         return templates.TemplateResponse(

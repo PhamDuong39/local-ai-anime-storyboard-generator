@@ -119,7 +119,10 @@ async def generate_prompts(request: Request, project_id: str) -> Response:
     is_htmx = request.headers.get("HX-Request", "").lower() == "true"
     try:
         prompt_list = OpenAIPromptService(
-            settings.projects_root, mock_mode=True
+            settings.projects_root,
+            mock_mode=settings.openai_mock_mode,
+            model=settings.openai_prompt_model,
+            api_key=settings.openai_api_key,
         ).generate_prompts(project_id)
     except AppError as exc:
         return templates.TemplateResponse(

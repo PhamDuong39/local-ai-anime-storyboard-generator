@@ -31,7 +31,26 @@ def _scene(status: str) -> dict[str, object]:
 
 
 def _configure(monkeypatch, tmp_path, status: str):
-    settings = Settings(projects_root=tmp_path / "projects")
+    settings = Settings(projects_root=tmp_path / "projects", openai_mock_mode=True)
+    monkeypatch.setattr(routes_prompts, "get_settings", lambda: settings)
+    project = ProjectService(
+        settings.projects_root,
+        image_model_id=settings.image_model_id,
+        low_vram_image_model_id=settings.low_vram_image_model_id,
+    ).create_project("Prompt Route", "youtube_standard")
+    scenes = SceneList.model_validate(
+        {
+            "project_id": project.project_id,
+            "scene_count": 1,
+            "scenes": [_scene(status)],
+        }
+    )
+    SceneService(settings.projects_root).save_scenes(project.project_id, scenes)
+    return settings, project
+
+
+def _configure_real_without_key(monkeypatch, tmp_path, status: str):
+    settings = Settings(projects_root=tmp_path / "projects", openai_mock_mode=False)
     monkeypatch.setattr(routes_prompts, "get_settings", lambda: settings)
     project = ProjectService(
         settings.projects_root,
@@ -184,3 +203,23 @@ async def test_prompt_page_links_to_generation_when_prompts_are_ready(
 
     assert response.status_code == 200
     assert f"/projects/{project.project_id}/generation" in response.text
+
+
+@pytest.mark.asyncio
+async def test_real_prompt_route_without_api_key_returns_friendly_error(
+    monkeypatch, tmp_path
+) -> None:
+    settings, project = _configure_real_without_key(monkeypatch, tmp_path, "approved")
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        response = await client.post(
+            f"/projects/{project.project_id}/prompts/generate",
+            follow_redirects=False,
+        )
+
+    assert response.status_code == 503
+    assert "OPENAI_API_KEY_MISSING" in response.text
+    assert not (
+        settings.projects_root / project.project_id / "metadata/prompts.json"
+    ).exists()
