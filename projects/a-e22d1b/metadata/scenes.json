@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "project_id": "a-e22d1b",
+  "story_title": null,
+  "language": "unknown",
+  "scene_count": 3,
+  "scenes": [
+    {
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "title": "Story opening",
+      "source_excerpt": "Find dropshipping product candidates for the US market from this broad category.\n\n[PASTE BROAD CATEGORY HERE]\n\nExamples:\n- mỹ phẩm cho nữ\n- mỹ phẩm cho nam\n- đồ trang điểm\n- sleep products\n- posture products\n- pet products\n- car accessories\n- home organization\n- pain relief products\n\nDo not ask me for a specific product.\nUse live web search. Do not rely only on assumptions.\n\nBefore filling Product Link or FB Ads Competitor link, actively search the web.",
+      "summary": "Find dropshipping product candidates for the US market from this broad category. [PASTE BROAD CATEGORY HERE] Examples: - mỹ phẩm cho nữ - mỹ phẩm cho nam - đồ trang điểm - sleep products - posture products - pet products - car accessories - home organization - pain relief product",
+      "characters": [
+        "Screenshot from 2026-06-17 15-37-57"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "Find dropshipping product candidates for the US market from this broad category. [PASTE BROAD CATEGORY HERE] Examples: - mỹ phẩm cho nữ - mỹ phẩm cho nam - đồ trang điểm - sleep products - posture products - pet products - car accessories - home organization - pain relief product",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep Screenshot from 2026-06-17 15-37-57's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    },
+    {
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "title": "Story development",
+      "source_excerpt": "For every product candidate, try to find:\n- one product/supplier link from Amazon, Alibaba, AliExpress, Walmart, Shopify store, or another accessible source\n- one competitor brand or store\n- one Meta/Facebook Ads Library link if publicly accessible\n\nOnly write \"Need research\" after attempting live search.\n\nStart from the category, generate US English seed keywords, search/reason through competitor products, filter weak products, and return the best product candidates.\n\nFollow this process:\n\n1. Convert my category into US English seed keywords.\n2. Search or identify relevant products from:\n   -",
+      "summary": "For every product candidate, try to find: - one product/supplier link from Amazon, Alibaba, AliExpress, Walmart, Shopify store, or another accessible source - one competitor brand or store - one Meta/Facebook Ads Library link if publicly accessible Only write \"Need research\" afte",
+      "characters": [
+        "Screenshot from 2026-06-17 15-37-57"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "For every product candidate, try to find: - one product/supplier link from Amazon, Alibaba, AliExpress, Walmart, Shopify store, or another accessible source - one competitor brand or store - one Meta/Facebook Ads Library link if publicly accessible Only write \"Need research\" afte",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep Screenshot from 2026-06-17 15-37-57's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    },
+    {
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "title": "Story conclusion",
+      "source_excerpt": "Return exactly these columns:\n\nProduct name | Product image | Product Link | USP | Niches/ Customer Pain point/ Desire | FB Ads Competitor link (Brands Ads library) | Ads lâu nhất | Note\n\n- Return only the spreadsheet-friendly table.\n- Do not write a long explanation.\n- Do not ask me which product to research.\n- Do not invent links, ad dates, prices, COGS, search volume, or review data.\n- If live data is unavailable, write \"Need live research\".\n- If competitor ad data is unavailable, write \"Need Meta Ads Library check\".\n- If supplier data is unavailable, write \"Need supplier validation\".\n- Eac",
+      "summary": "Return exactly these columns: Product name | Product image | Product Link | USP | Niches/ Customer Pain point/ Desire | FB Ads Competitor link (Brands Ads library) | Ads lâu nhất | Note - Return only the spreadsheet-friendly table. - Do not write a long explanation. - Do not ask",
+      "characters": [
+        "Screenshot from 2026-06-17 15-37-57"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "Return exactly these columns: Product name | Product image | Product Link | USP | Niches/ Customer Pain point/ Desire | FB Ads Competitor link (Brands Ads library) | Ads lâu nhất | Note - Return only the spreadsheet-friendly table. - Do not write a long explanation. - Do not ask",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep Screenshot from 2026-06-17 15-37-57's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+<article class="card prompt-card" id="{{ scene.scene_id if scene else (prompt.scene_id if prompt else card_scene_id) }}-prompt">
+  {% if flash_message %}
+    <div class="flash-banner{% if flash_kind %} is-{{ flash_kind }}{% endif %}" role="{% if flash_kind == 'error' %}alert{% else %}status{% endif %}">
+      {{ flash_message }}
+      {% if error_code %}<span class="flash-code">{{ error_code }}</span>{% endif %}
+    </div>
+  {% endif %}
+
+  <div class="scene-card-heading">
+    <div>
+      <p class="eyebrow">
+        {% if scene %}
+          Scene {{ scene.scene_number }} · {{ scene.scene_id }}
+        {% elif prompt %}
+          Scene {{ prompt.scene_number }} · {{ prompt.scene_id }}
+        {% else %}
+          {{ card_scene_id }}
+        {% endif %}
+      </p>
+      <h2>{{ scene.title if scene else (prompt.scene_id if prompt else "Prompt not found") }}</h2>
+    </div>
+    {% if prompt %}
+      <span class="status-pill">{{ prompt.status.value }}{% if prompt.manual_edit %} · edited{% endif %}</span>
+    {% else %}
+      <span class="status-pill">missing prompt</span>
+    {% endif %}
+  </div>
+
+  {% if scene %}
+    <dl class="prompt-scene-facts">
+      <div><dt>Action</dt><dd>{{ scene.main_action }}</dd></div>
+      <div><dt>Characters</dt><dd>{{ scene.characters | join(", ") if scene.characters else "None listed" }}</dd></div>
+      <div><dt>Mood</dt><dd>{{ scene.mood }}</dd></div>
+    </dl>
+  {% endif %}
+
+  {% if prompt %}
+    <form class="form-stack" action="/projects/{{ project.project_id }}/prompts/{{ prompt.scene_id }}" method="post" hx-post="/projects/{{ project.project_id }}/prompts/{{ prompt.scene_id }}" hx-target="#{{ prompt.scene_id }}-prompt" hx-swap="outerHTML">
+      <label>
+        <span>Positive prompt</span>
+        <textarea name="positive_prompt" rows="6" required>{{ prompt.positive_prompt }}</textarea>
+      </label>
+      <label>
+        <span>Negative prompt</span>
+        <textarea name="negative_prompt" rows="4" required>{{ prompt.negative_prompt }}</textarea>
+      </label>
+      <div class="prompt-settings muted">
+        {{ prompt.generation_settings.width }}×{{ prompt.generation_settings.height }}
+        · {{ prompt.generation_settings.num_inference_steps }} steps
+        · guidance {{ prompt.generation_settings.guidance_scale }}
+      </div>
+      <div class="actions">
+        <button type="submit">Save prompt</button>
+      </div>
+    </form>
+  {% else %}
+    <p class="muted">No prompt has been generated for this approved scene yet.</p>
+  {% endif %}
+</article>

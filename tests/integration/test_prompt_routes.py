@@ -93,3 +93,94 @@ async def test_prompt_generation_route_succeeds_after_approval(
         == "scene_001"
     )
     assert read_json(root / "metadata/project.json")["status"] == "PROMPTS_GENERATED"
+
+
+@pytest.mark.asyncio
+async def test_prompt_page_renders_approved_scene_without_prompts(
+    monkeypatch, tmp_path
+) -> None:
+    _, project = _configure(monkeypatch, tmp_path, "approved")
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        response = await client.get(f"/projects/{project.project_id}/prompts")
+
+    assert response.status_code == 200
+    assert "1 approved scene" in response.text
+    assert "No prompt has been generated" in response.text
+
+
+@pytest.mark.asyncio
+async def test_update_prompt_route_saves_manual_edit(monkeypatch, tmp_path) -> None:
+    settings, project = _configure(monkeypatch, tmp_path, "approved")
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        await client.post(
+            f"/projects/{project.project_id}/prompts/generate",
+            follow_redirects=False,
+        )
+        response = await client.post(
+            f"/projects/{project.project_id}/prompts/scene_001",
+            data={
+                "positive_prompt": "edited anime storyboard prompt",
+                "negative_prompt": "text, subtitle, watermark",
+            },
+            headers={"HX-Request": "true"},
+        )
+        page = await client.get(f"/projects/{project.project_id}/prompts")
+
+    assert response.status_code == 200
+    assert "Prompt saved." in response.text
+    assert "ready" in response.text
+    assert "edited" in response.text
+    assert "edited anime storyboard prompt" in page.text
+    root = settings.projects_root / project.project_id
+    saved_prompt = read_json(root / "metadata/prompts.json")["prompts"][0]
+    assert saved_prompt["manual_edit"] is True
+    assert saved_prompt["positive_prompt"] == "edited anime storyboard prompt"
+
+
+@pytest.mark.asyncio
+async def test_update_prompt_route_rejects_empty_prompt(monkeypatch, tmp_path) -> None:
+    settings, project = _configure(monkeypatch, tmp_path, "approved")
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        await client.post(
+            f"/projects/{project.project_id}/prompts/generate",
+            follow_redirects=False,
+        )
+        response = await client.post(
+            f"/projects/{project.project_id}/prompts/scene_001",
+            data={
+                "positive_prompt": "   ",
+                "negative_prompt": "text, subtitle, watermark",
+            },
+            headers={"HX-Request": "true"},
+        )
+
+    assert response.status_code == 400
+    assert "PROMPT_UPDATE_INVALID" in response.text
+    root = settings.projects_root / project.project_id
+    saved_prompt = read_json(root / "metadata/prompts.json")["prompts"][0]
+    assert saved_prompt["manual_edit"] is False
+    assert saved_prompt["positive_prompt"].startswith("anime storyboard illustration")
+
+
+@pytest.mark.asyncio
+async def test_prompt_page_links_to_generation_when_prompts_are_ready(
+    monkeypatch, tmp_path
+) -> None:
+    _, project = _configure(monkeypatch, tmp_path, "approved")
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        await client.post(
+            f"/projects/{project.project_id}/prompts/generate",
+            follow_redirects=False,
+        )
+        response = await client.get(f"/projects/{project.project_id}/prompts")
+
+    assert response.status_code == 200
+    assert f"/projects/{project.project_id}/generation" in response.text

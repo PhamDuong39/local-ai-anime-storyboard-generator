@@ -147,7 +147,7 @@ class PromptService:
                     raise AppError(
                         code="PROMPT_UPDATE_INVALID",
                         message="Positive and negative prompts cannot be empty.",
-                        http_status=422,
+                        http_status=400,
                     ) from exc
                 prompt = updated_prompt
             updated_prompts.append(prompt)

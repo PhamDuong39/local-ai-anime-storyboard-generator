@@ -218,9 +218,9 @@ class ProjectService:
             defaults=GenerationDefaults(negative_prompt=DEFAULT_NEGATIVE_PROMPT),
             hardware=HardwareSettings(
                 device="unknown",
+                gpu_name=None,
                 vram_gb=0,
                 cuda_available=False,
-                torch_dtype="unknown",
                 hardware_profile=HardwareProfile.UNKNOWN,
                 detected_at=now,
             ),

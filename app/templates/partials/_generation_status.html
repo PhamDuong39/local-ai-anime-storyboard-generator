@@ -1,0 +1,64 @@
+<section id="generation-status"
+         class="card generation-status"
+         aria-live="polite"
+         {% if job and job.status.value in polling_statuses %}
+           hx-get="/projects/{{ project_id }}/generation/status"
+           hx-trigger="every 2s"
+           hx-swap="outerHTML"
+         {% endif %}>
+  {% include "partials/_flash.html" %}
+
+  <div class="scene-card-heading">
+    <div>
+      <h2>Generation status</h2>
+      {% if job %}
+        <p class="muted">{{ job.current_message or "Generation status is available." }}</p>
+      {% else %}
+        <p class="muted">No generation job has started yet.</p>
+      {% endif %}
+    </div>
+    {% if job %}
+      <span class="status-pill">{{ job.status.value }}</span>
+    {% endif %}
+  </div>
+
+  {% if job %}
+    <div class="progress-meter" aria-label="Generation progress">
+      <div class="progress-meter-fill" style="width: {{ job.progress_percent }}%"></div>
+    </div>
+    <dl class="prompt-scene-facts">
+      <div>
+        <dt>Progress</dt>
+        <dd>{{ job.progress_percent }}%</dd>
+      </div>
+      <div>
+        <dt>Completed</dt>
+        <dd>{{ job.completed_scenes }} / {{ job.total_scenes }}</dd>
+      </div>
+      <div>
+        <dt>Failed</dt>
+        <dd>{{ job.failed_scenes }}</dd>
+      </div>
+      <div>
+        <dt>Current scene</dt>
+        <dd>{{ job.current_scene_title or "None" }}</dd>
+      </div>
+    </dl>
+
+    {% if job.scene_results %}
+      <div class="generation-results">
+        {% for result in job.scene_results %}
+          <article class="generation-result-row">
+            <strong>{{ "%03d"|format(result.scene_number) }} {{ result.scene_id }}</strong>
+            <span>{{ result.status.value }}</span>
+            {% if result.output_path %}
+              <code>{{ result.output_path }}</code>
+            {% elif result.error_code %}
+              <code>{{ result.error_code }}</code>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endif %}
+</section>

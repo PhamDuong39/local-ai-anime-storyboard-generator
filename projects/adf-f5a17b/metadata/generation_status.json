@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "project_id": "adf-f5a17b",
+  "job_id": "gen_20260626_072940_3b53d6",
+  "status": "completed",
+  "started_at": "2026-06-26T07:29:40.733759Z",
+  "updated_at": "2026-06-26T07:29:40.892042Z",
+  "completed_at": "2026-06-26T07:29:40.892042Z",
+  "generation_plan": {
+    "pipeline": "sdxl",
+    "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
+    "device": "unknown",
+    "torch_dtype": "float32",
+    "output_preset_id": "youtube_standard"
+  },
+  "character_consistency": {
+    "method": "ip-adapter-faceid",
+    "mode": "prompt_only",
+    "enabled": false,
+    "disabled_reason": "faceid_not_selected_in_m7",
+    "fallback": "prompt_based_character_hints"
+  },
+  "total_scenes": 3,
+  "completed_scenes": 3,
+  "failed_scenes": 0,
+  "skipped_scenes": 0,
+  "current_scene_id": "scene_003",
+  "current_scene_number": 3,
+  "current_scene_title": "Story conclusion",
+  "progress_percent": 100,
+  "current_message": "Generation completed.",
+  "scene_results": [
+    {
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "status": "success",
+      "output_path": "outputs/images/001_story_opening.png",
+      "error_code": null,
+      "error_message": null,
+      "started_at": "2026-06-26T07:29:40.795925Z",
+      "completed_at": "2026-06-26T07:29:40.795925Z"
+    },
+    {
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "status": "success",
+      "output_path": "outputs/images/002_story_development.png",
+      "error_code": null,
+      "error_message": null,
+      "started_at": "2026-06-26T07:29:40.843442Z",
+      "completed_at": "2026-06-26T07:29:40.843442Z"
+    },
+    {
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "status": "success",
+      "output_path": "outputs/images/003_story_conclusion.png",
+      "error_code": null,
+      "error_message": null,
+      "started_at": "2026-06-26T07:29:40.887499Z",
+      "completed_at": "2026-06-26T07:29:40.887499Z"
+    }
+  ],
+  "errors": []
+}

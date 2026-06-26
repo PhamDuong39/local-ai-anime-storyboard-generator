@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from app.schemas.character import ConsistencyMethod
 from app.schemas.project import OutputPreset
@@ -53,12 +53,27 @@ class HardwareSettings(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     device: str = Field(min_length=1)
-    gpu_name: str = ""
+    gpu_name: str | None = None
     vram_gb: float = Field(ge=0)
     cuda_available: bool
-    torch_dtype: str = Field(min_length=1)
     hardware_profile: HardwareProfile
     detected_at: datetime
+
+    @model_validator(mode="before")
+    @classmethod
+    def drop_legacy_torch_dtype(cls, value: object) -> object:
+        if isinstance(value, dict) and "torch_dtype" in value:
+            cleaned = dict(value)
+            cleaned.pop("torch_dtype")
+            return cleaned
+        return value
+
+
+class HardwareDetection(HardwareSettings):
+    """First-pass hardware detection output.
+
+    Runtime dtype choices belong to GenerationPlan, not hardware metadata.
+    """
 
 
 class CharacterConsistencySettings(BaseModel):
@@ -92,3 +107,23 @@ class GenerationSettings(BaseModel):
     character_consistency: CharacterConsistencySettings
     safety: GenerationSafetySettings = Field(default_factory=GenerationSafetySettings)
     updated_at: datetime
+
+
+class GenerationReadinessIssue(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    code: str = Field(min_length=1)
+    message: str = Field(min_length=1)
+    details: dict[str, object] = Field(default_factory=dict)
+
+
+class GenerationReadinessResult(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    ok: bool
+    project_id: str = Field(min_length=1)
+    active_scene_count: int = Field(default=0, ge=0)
+    prompt_count: int = Field(default=0, ge=0)
+    hardware: HardwareDetection | None = None
+    warnings: list[GenerationReadinessIssue] = Field(default_factory=list)
+    blocking_errors: list[GenerationReadinessIssue] = Field(default_factory=list)

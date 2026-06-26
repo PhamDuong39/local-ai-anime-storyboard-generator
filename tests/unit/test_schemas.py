@@ -185,7 +185,6 @@ def test_generation_settings_and_hardware_profile() -> None:
                 "gpu_name": "Example GPU",
                 "vram_gb": 4.0,
                 "cuda_available": True,
-                "torch_dtype": "float16",
                 "hardware_profile": "low_vram_4gb",
                 "detected_at": NOW,
             },
@@ -196,6 +195,35 @@ def test_generation_settings_and_hardware_profile() -> None:
 
     assert settings.hardware.hardware_profile is HardwareProfile.LOW_VRAM_4GB
     assert settings.defaults.guidance_scale == 7.0
+
+
+def test_hardware_settings_ignores_legacy_torch_dtype() -> None:
+    settings = GenerationSettings.model_validate(
+        {
+            "project_id": "valid-project",
+            "output_preset": PRESET,
+            "generation_mode": "auto",
+            "image_model": {
+                "primary_pipeline": "sdxl",
+                "image_model_id": "stabilityai/stable-diffusion-xl-base-1.0",
+                "low_vram_image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+            },
+            "defaults": {"negative_prompt": "text, watermark, logo"},
+            "hardware": {
+                "device": "cuda",
+                "gpu_name": "Example GPU",
+                "vram_gb": 4.0,
+                "cuda_available": True,
+                "torch_dtype": "float16",
+                "hardware_profile": "low_vram_4gb",
+                "detected_at": NOW,
+            },
+            "character_consistency": {"enabled": False},
+            "updated_at": NOW,
+        }
+    )
+
+    assert "torch_dtype" not in settings.hardware.model_dump(mode="json")
 
 
 def test_generation_job_schema() -> None:

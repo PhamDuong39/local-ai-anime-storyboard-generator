@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.core.errors import AppError, app_error_handler
 from app.web.routes_characters import router as characters_router
+from app.web.routes_generation import router as generation_router
 from app.web.routes_home import router as home_router
 from app.web.routes_projects import router as projects_router
 from app.web.routes_prompts import router as prompts_router
@@ -25,6 +26,7 @@ def create_app() -> FastAPI:
     app.include_router(characters_router)
     app.include_router(scenes_router)
     app.include_router(prompts_router)
+    app.include_router(generation_router)
 
     return app
 

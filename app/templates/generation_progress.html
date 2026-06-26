@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card">
+    <p class="eyebrow">Generation workflow</p>
+    <h2>Generate storyboard images</h2>
+    <p class="muted">Generation starts only after scenes are approved and prompts are ready.</p>
+  </section>
+
+  <section class="card generation-readiness">
+    <div class="scene-card-heading">
+      <div>
+        <h2>Readiness</h2>
+        <p class="muted">{{ readiness.active_scene_count }} scene{% if readiness.active_scene_count != 1 %}s{% endif %}, {{ readiness.prompt_count }} prompt{% if readiness.prompt_count != 1 %}s{% endif %}</p>
+      </div>
+      <span class="status-pill">{{ "Ready" if readiness.ok else "Blocked" }}</span>
+    </div>
+
+    {% if readiness.hardware %}
+      <dl class="prompt-scene-facts">
+        <div>
+          <dt>Hardware</dt>
+          <dd>{{ readiness.hardware.hardware_profile.value }}</dd>
+        </div>
+        <div>
+          <dt>Device</dt>
+          <dd>{{ readiness.hardware.device }}</dd>
+        </div>
+        <div>
+          <dt>VRAM</dt>
+          <dd>{{ readiness.hardware.vram_gb }} GB</dd>
+        </div>
+      </dl>
+    {% endif %}
+
+    {% if readiness.blocking_errors %}
+      <div class="generation-messages">
+        {% for error in readiness.blocking_errors %}
+          <p class="flash-banner is-error">{{ error.message }} <span class="flash-code">{{ error.code }}</span></p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if readiness.warnings %}
+      <div class="generation-messages">
+        {% for warning in readiness.warnings %}
+          <p class="flash-banner">{{ warning.message }} <span class="flash-code">{{ warning.code }}</span></p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if readiness.ok %}
+      <form method="post"
+            action="/projects/{{ project_id }}/generation/start"
+            hx-post="/projects/{{ project_id }}/generation/start"
+            hx-target="#generation-status"
+            hx-swap="outerHTML">
+        <button type="submit">Generate images</button>
+      </form>
+    {% endif %}
+  </section>
+
+  {% include "partials/_generation_status.html" %}
+{% endblock %}

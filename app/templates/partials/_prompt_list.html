@@ -1,23 +1,40 @@
-<section id="prompt-list" class="prompt-list">
+<section id="prompt-list" class="prompt-list" aria-live="polite">
   {% include "partials/_flash.html" %}
-  {% if prompts %}
-    {% for prompt in prompts %}
-      <article class="card" id="{{ prompt.scene_id }}-prompt">
-        <p class="eyebrow">Scene {{ prompt.scene_number }}</p>
-        <h3>{{ prompt.scene_id }}</h3>
-        <p>{{ prompt.positive_prompt }}</p>
-        <p class="muted">Status: {{ prompt.status.value }}</p>
-      </article>
+
+  {% if approved_scenes %}
+    <div class="scene-summary card">
+      <div>
+        <h2>{{ approved_scenes | length }} approved scene{% if approved_scenes | length != 1 %}s{% endif %}</h2>
+        <p class="muted">Generated prompts stay editable before image generation.</p>
+      </div>
+      <div class="actions">
+        <form method="post"
+              action="/projects/{{ project.project_id }}/prompts/generate"
+              hx-post="/projects/{{ project.project_id }}/prompts/generate"
+              hx-target="#prompt-list"
+              hx-swap="outerHTML">
+          <button type="submit">Generate prompts</button>
+        </form>
+        {% if prompts_ready %}
+          <a class="button" href="/projects/{{ project.project_id }}/generation">Continue to generation</a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% for scene in approved_scenes %}
+      {% set prompt = prompt_by_scene_id.get(scene.scene_id) %}
+      {% include "partials/_prompt_card.html" %}
     {% endfor %}
   {% else %}
     <article class="card">
-      <p>No prompts have been generated yet.</p>
+      <h2>Approve scenes first</h2>
+      <p class="muted">Prompts can be generated only after all active scenes are approved.</p>
       <form method="post"
             action="/projects/{{ project.project_id }}/prompts/generate"
             hx-post="/projects/{{ project.project_id }}/prompts/generate"
             hx-target="#prompt-list"
             hx-swap="outerHTML">
-        <button type="submit" {% if not scenes_approved %}disabled{% endif %}>Generate prompts</button>
+        <button type="submit" disabled>Generate prompts</button>
       </form>
     </article>
   {% endif %}

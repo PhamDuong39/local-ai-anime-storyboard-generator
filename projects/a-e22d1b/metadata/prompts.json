@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "project_id": "a-e22d1b",
+  "prompt_version": 1,
+  "style_preset": "anime_storyboard_default",
+  "output_preset": {
+    "id": "youtube_standard",
+    "name": "YouTube Standard",
+    "width": 1280,
+    "height": 720,
+    "aspect_ratio": "16:9"
+  },
+  "prompts": [
+    {
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "positive_prompt": "anime storyboard illustration, wide shot, eye level, Screenshot from 2026-06-17 15-37-57: Find dropshipping product candidates for the US market from this broad category. [PASTE BROAD CATEGORY HERE] Examples: - mỹ phẩm cho nữ - mỹ phẩm cho nam - đồ trang điểm - sleep products - posture products - pet products - car accessories - home organization - pain relief product, story setting, unknown, cinematic mood, anime storyboard composition, clear character staging, environment matching the story excerpt, Keep Screenshot from 2026-06-17 15-37-57's outfit and visual identity consistent with the reference., cinematic lighting, clean line art, clear character staging, 16:9 composition, 1280x720 output",
+      "negative_prompt": "low quality, blurry, pixelated, distorted face, asymmetrical eyes, bad anatomy, bad hands, extra fingers, missing fingers, duplicate character, inconsistent outfit, inconsistent hairstyle, text, subtitle, speech bubble, watermark, logo, cropped face, cropped body",
+      "characters": [
+        {
+          "name": "Screenshot from 2026-06-17 15-37-57",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-17 15-37-57.png",
+          "consistency_method": "ip-adapter-faceid",
+          "role_in_scene": "featured character",
+          "visual_priority": "high"
+        }
+      ],
+      "generation_settings": {
+        "width": 1280,
+        "height": 720,
+        "num_images": 1,
+        "seed": null,
+        "guidance_scale": 7.0,
+        "num_inference_steps": 30
+      },
+      "status": "ready",
+      "manual_edit": true
+    },
+    {
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "positive_prompt": "anime storyboard illustration, wide shot, eye level, Screenshot from 2026-06-17 15-37-57: For every product candidate, try to find: - one product/supplier link from Amazon, Alibaba, AliExpress, Walmart, Shopify store, or another accessible source - one competitor brand or store - one Meta/Facebook Ads Library link if publicly accessible Only write \"Need research\" afte, story setting, unknown, cinematic mood, anime storyboard composition, clear character staging, environment matching the story excerpt, Keep Screenshot from 2026-06-17 15-37-57's outfit and visual identity consistent with the reference., cinematic lighting, clean line art, clear character staging, 16:9 composition, 1280x720 output",
+      "negative_prompt": "low quality, blurry, pixelated, distorted face, asymmetrical eyes, bad anatomy, bad hands, extra fingers, missing fingers, duplicate character, inconsistent outfit, inconsistent hairstyle, text, subtitle, speech bubble, watermark, logo, cropped face, cropped body",
+      "characters": [
+        {
+          "name": "Screenshot from 2026-06-17 15-37-57",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-17 15-37-57.png",
+          "consistency_method": "ip-adapter-faceid",
+          "role_in_scene": "featured character",
+          "visual_priority": "high"
+        }
+      ],
+      "generation_settings": {
+        "width": 1280,
+        "height": 720,
+        "num_images": 1,
+        "seed": null,
+        "guidance_scale": 7.0,
+        "num_inference_steps": 30
+      },
+      "status": "ready",
+      "manual_edit": true
+    },
+    {
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "positive_prompt": "anime storyboard illustration, wide shot, eye level, Screenshot from 2026-06-17 15-37-57: Return exactly these columns: Product name | Product image | Product Link | USP | Niches/ Customer Pain point/ Desire | FB Ads Competitor link (Brands Ads library) | Ads lâu nhất | Note - Return only the spreadsheet-friendly table. - Do not write a long explanation. - Do not ask, story setting, unknown, cinematic mood, anime storyboard composition, clear character staging, environment matching the story excerpt, Keep Screenshot from 2026-06-17 15-37-57's outfit and visual identity consistent with the reference., cinematic lighting, clean line art, clear character staging, 16:9 composition, 1280x720 output",
+      "negative_prompt": "low quality, blurry, pixelated, distorted face, asymmetrical eyes, bad anatomy, bad hands, extra fingers, missing fingers, duplicate character, inconsistent outfit, inconsistent hairstyle, text, subtitle, speech bubble, watermark, logo, cropped face, cropped body",
+      "characters": [
+        {
+          "name": "Screenshot from 2026-06-17 15-37-57",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-17 15-37-57.png",
+          "consistency_method": "ip-adapter-faceid",
+          "role_in_scene": "featured character",
+          "visual_priority": "high"
+        }
+      ],
+      "generation_settings": {
+        "width": 1280,
+        "height": 720,
+        "num_images": 1,
+        "seed": null,
+        "guidance_scale": 7.0,
+        "num_inference_steps": 30
+      },
+      "status": "ready",
+      "manual_edit": true
+    }
+  ]
+}
