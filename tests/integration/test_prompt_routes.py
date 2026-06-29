@@ -31,7 +31,7 @@ def _scene(status: str) -> dict[str, object]:
 
 
 def _configure(monkeypatch, tmp_path, status: str):
-    settings = Settings(projects_root=tmp_path / "projects", openai_mock_mode=True)
+    settings = Settings(projects_root=tmp_path / "projects")
     monkeypatch.setattr(routes_prompts, "get_settings", lambda: settings)
     project = ProjectService(
         settings.projects_root,
@@ -112,6 +112,31 @@ async def test_prompt_generation_route_succeeds_after_approval(
         == "scene_001"
     )
     assert read_json(root / "metadata/project.json")["status"] == "PROMPTS_GENERATED"
+
+
+@pytest.mark.asyncio
+async def test_default_prompt_route_uses_mock_data_without_api_key(
+    monkeypatch, tmp_path
+) -> None:
+    settings, project = _configure(monkeypatch, tmp_path, "approved")
+    assert settings.openai_mock_mode is True
+    assert settings.has_openai_api_key is False
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        response = await client.post(
+            f"/projects/{project.project_id}/prompts/generate",
+            follow_redirects=False,
+        )
+
+    assert response.status_code == 303
+    prompts = read_json(
+        settings.projects_root / project.project_id / "metadata/prompts.json"
+    )
+    assert prompts["prompts"][0]["positive_prompt"].startswith(
+        "anime storyboard illustration"
+    )
 
 
 @pytest.mark.asyncio

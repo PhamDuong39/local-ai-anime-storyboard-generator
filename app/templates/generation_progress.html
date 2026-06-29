@@ -27,6 +27,14 @@
           <dd>{{ readiness.hardware.device }}</dd>
         </div>
         <div>
+          <dt>GPU</dt>
+          <dd>{{ readiness.hardware.gpu_name or "CPU" }}</dd>
+        </div>
+        <div>
+          <dt>CUDA</dt>
+          <dd>{{ "Available" if readiness.hardware.cuda_available else "Unavailable" }}</dd>
+        </div>
+        <div>
           <dt>VRAM</dt>
           <dd>{{ readiness.hardware.vram_gb }} GB</dd>
         </div>

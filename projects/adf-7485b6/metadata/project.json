@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "project_id": "adf-7485b6",
+  "project_name": "adf",
+  "description": "",
+  "status": "GENERATION_COMPLETED",
+  "output_preset": {
+    "id": "youtube_standard",
+    "name": "YouTube Standard",
+    "width": 1280,
+    "height": 720,
+    "aspect_ratio": "16:9"
+  },
+  "created_at": "2026-06-29T02:27:19.215784Z",
+  "updated_at": "2026-06-29T02:28:05.815282Z"
+}

@@ -19,7 +19,7 @@ They hear footsteps approaching from a classroom."""
 
 
 def configure_scene_project(monkeypatch, tmp_path):
-    settings = Settings(projects_root=tmp_path / "projects", openai_mock_mode=True)
+    settings = Settings(projects_root=tmp_path / "projects")
     monkeypatch.setattr(routes_scenes, "get_settings", lambda: settings)
     project = ProjectService(
         settings.projects_root,
@@ -75,6 +75,30 @@ async def test_scene_page_shows_split_cta_and_mock_split_persists_drafts(
     assert scenes["scene_count"] == 3
     assert all(scene["status"] == "draft" for scene in scenes["scenes"])
     assert read_json(root / "metadata/project.json")["status"] == "SCENES_GENERATED"
+
+
+@pytest.mark.asyncio
+async def test_default_scene_route_uses_mock_data_without_api_key(
+    monkeypatch, tmp_path
+) -> None:
+    settings, project = configure_scene_project(monkeypatch, tmp_path)
+    assert settings.openai_mock_mode is True
+    assert settings.has_openai_api_key is False
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        response = await client.post(
+            f"/projects/{project.project_id}/scenes/split",
+            follow_redirects=False,
+        )
+
+    assert response.status_code == 303
+    scenes = read_json(
+        settings.projects_root / project.project_id / "metadata/scenes.json"
+    )
+    assert scenes["scene_count"] == 3
+    assert scenes["scenes"][0]["title"] == "Story opening"
 
 
 @pytest.mark.asyncio

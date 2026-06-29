@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "project_id": "adf-7485b6",
+  "latest_job_id": "gen_20260629_022805_37211a",
+  "created_at": "2026-06-29T02:28:05.649207Z",
+  "updated_at": "2026-06-29T02:28:05.802786Z",
+  "assets": [
+    {
+      "asset_id": "asset_scene_001_gen_20260629_022805_37211a",
+      "job_id": "gen_20260629_022805_37211a",
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "scene_title": "Story opening",
+      "prompt_id": "scene_001",
+      "output_filename": "001_story_opening.png",
+      "output_path": "outputs/images/001_story_opening.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stabilityai/stable-diffusion-xl-base-1.0",
+      "pipeline": "sdxl",
+      "seed": 1,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-15 11-41-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-15 11-41-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:84ac0314bb53b34a1b942104e6b08918579bac8669f1f52fa064bd3ad552e98b",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-29T02:28:05.708292Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_002_gen_20260629_022805_37211a",
+      "job_id": "gen_20260629_022805_37211a",
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "scene_title": "Story development",
+      "prompt_id": "scene_002",
+      "output_filename": "002_story_development.png",
+      "output_path": "outputs/images/002_story_development.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stabilityai/stable-diffusion-xl-base-1.0",
+      "pipeline": "sdxl",
+      "seed": 2,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-15 11-41-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-15 11-41-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:bd8318512852f2af784e4d3d91fc9da625800d8f4e25edaa357452b8ccf0b576",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-29T02:28:05.755750Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_003_gen_20260629_022805_37211a",
+      "job_id": "gen_20260629_022805_37211a",
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "scene_title": "Story conclusion",
+      "prompt_id": "scene_003",
+      "output_filename": "003_story_conclusion.png",
+      "output_path": "outputs/images/003_story_conclusion.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stabilityai/stable-diffusion-xl-base-1.0",
+      "pipeline": "sdxl",
+      "seed": 3,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-15 11-41-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-15 11-41-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:1717231d76f54be96a821f0647e954450ead243edbcb3419b5a774847968bb14",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-29T02:28:05.802743Z",
+      "error_code": null,
+      "error_message": null
+    }
+  ]
+}

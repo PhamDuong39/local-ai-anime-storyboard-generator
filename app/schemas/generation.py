@@ -58,6 +58,7 @@ class HardwareSettings(BaseModel):
     cuda_available: bool
     hardware_profile: HardwareProfile
     detected_at: datetime
+    details: dict[str, object] = Field(default_factory=dict)
 
     @model_validator(mode="before")
     @classmethod

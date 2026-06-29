@@ -221,6 +221,9 @@ async def test_generation_page_shows_start_button_when_ready(
 
     assert response.status_code == 200
     assert "Ready" in response.text
+    assert "High VRAM GPU" in response.text
+    assert "Available" in response.text
+    assert "12.0 GB" in response.text
     assert "Generate images" in response.text
 
 
