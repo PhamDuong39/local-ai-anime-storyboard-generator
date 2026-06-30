@@ -1,3 +1,4 @@
+from pathlib import Path
 from types import SimpleNamespace
 
 from app.schemas.generation import HardwareProfile
@@ -54,9 +55,81 @@ def test_cpu_only_system_returns_cpu_profile() -> None:
     assert "torch_dtype" not in hardware.model_dump(mode="json")
 
 
+def test_linux_proc_cpuinfo_cpu_model_detection(monkeypatch, tmp_path: Path) -> None:
+    cpuinfo_path = tmp_path / "cpuinfo"
+    cpuinfo_path.write_text(
+        "processor\t: 0\n"
+        "model name\t: Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(HardwareService, "CPUINFO_PATH", cpuinfo_path)
+    monkeypatch.setattr(HardwareService, "_get_optional_module", lambda self, name: None)
+    monkeypatch.setattr(hardware_service_module.platform, "processor", lambda: "fallback")
+    monkeypatch.setattr(hardware_service_module.platform, "machine", lambda: "x86_64")
+    monkeypatch.setattr(hardware_service_module.os, "cpu_count", lambda: 12)
+
+    hardware = HardwareService(
+        torch_module=make_torch(FakeCuda(available=False))
+    ).detect_hardware()
+
+    assert hardware.cpu_model == "Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz"
+    assert hardware.cpu_arch == "x86_64"
+    assert hardware.physical_cores is None
+    assert hardware.logical_cores == 12
+    assert hardware.device == "cpu"
+    assert hardware.cuda_available is False
+    assert hardware.vram_gb == 0
+    assert hardware.hardware_profile is HardwareProfile.CPU_ONLY
+
+
+def test_cpu_platform_fallback_detection(monkeypatch, tmp_path: Path) -> None:
+    monkeypatch.setattr(HardwareService, "CPUINFO_PATH", tmp_path / "missing-cpuinfo")
+    monkeypatch.setattr(HardwareService, "_get_optional_module", lambda self, name: None)
+    monkeypatch.setattr(
+        hardware_service_module.platform,
+        "processor",
+        lambda: "Apple M3 Pro",
+    )
+    monkeypatch.setattr(hardware_service_module.platform, "machine", lambda: "arm64")
+    monkeypatch.setattr(hardware_service_module.os, "cpu_count", lambda: 11)
+
+    hardware = HardwareService(
+        torch_module=make_torch(FakeCuda(available=False))
+    ).detect_hardware()
+
+    assert hardware.cpu_model == "Apple M3 Pro"
+    assert hardware.cpu_arch == "arm64"
+    assert hardware.physical_cores is None
+    assert hardware.logical_cores == 11
+    assert hardware.hardware_profile is HardwareProfile.CPU_ONLY
+
+
+def test_unavailable_cpu_model_still_returns_cpu_only(
+    monkeypatch, tmp_path: Path
+) -> None:
+    monkeypatch.setattr(HardwareService, "CPUINFO_PATH", tmp_path / "missing-cpuinfo")
+    monkeypatch.setattr(HardwareService, "_get_optional_module", lambda self, name: None)
+    monkeypatch.setattr(hardware_service_module.platform, "processor", lambda: "")
+    monkeypatch.setattr(hardware_service_module.platform, "machine", lambda: "")
+    monkeypatch.setattr(hardware_service_module.os, "cpu_count", lambda: None)
+
+    hardware = HardwareService(
+        torch_module=make_torch(FakeCuda(available=False))
+    ).detect_hardware()
+
+    assert hardware.cpu_model is None
+    assert hardware.cpu_arch is None
+    assert hardware.physical_cores is None
+    assert hardware.logical_cores is None
+    assert hardware.device == "cpu"
+    assert hardware.cuda_available is False
+    assert hardware.vram_gb == 0
+    assert hardware.hardware_profile is HardwareProfile.CPU_ONLY
+
+
 def test_torch_unavailable_returns_cpu_profile(monkeypatch) -> None:
     def fail_import(name: str) -> object:
-        assert name == "torch"
+        assert name in {"psutil", "torch"}
         raise ImportError("torch unavailable")
 
     monkeypatch.setattr(hardware_service_module, "import_module", fail_import)

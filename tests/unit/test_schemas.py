@@ -194,6 +194,7 @@ def test_generation_settings_and_hardware_profile() -> None:
     )
 
     assert settings.hardware.hardware_profile is HardwareProfile.LOW_VRAM_4GB
+    assert settings.hardware.cpu_model is None
     assert settings.defaults.guidance_scale == 7.0
 
 

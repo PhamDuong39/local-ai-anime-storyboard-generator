@@ -11,6 +11,7 @@ def test_settings_defaults(monkeypatch, tmp_path: Path) -> None:
     assert settings.openai_scene_model == "gpt-5.4-mini"
     assert settings.openai_prompt_model == "gpt-5.4-mini"
     assert settings.openai_mock_mode is True
+    assert settings.image_generation_mock_mode is True
     assert settings.openai_context_token_limit == 128000
     assert settings.openai_request_overhead_tokens == 4000
     assert settings.projects_root == Path("projects")
@@ -28,6 +29,7 @@ def test_settings_environment_override(monkeypatch, tmp_path: Path) -> None:
     monkeypatch.setenv("PROJECTS_ROOT", "custom-projects")
     monkeypatch.setenv("OPENAI_API_KEY", "not-logged-secret")
     monkeypatch.setenv("OPENAI_MOCK_MODE", "false")
+    monkeypatch.setenv("IMAGE_GENERATION_MOCK_MODE", "false")
     monkeypatch.setenv("FORCE_LOW_VRAM_MODE", "true")
     monkeypatch.setenv("ENABLE_IP_ADAPTER_FACEID", "force")
 
@@ -37,6 +39,7 @@ def test_settings_environment_override(monkeypatch, tmp_path: Path) -> None:
     assert settings.projects_root == Path("custom-projects")
     assert settings.force_low_vram_mode is True
     assert settings.openai_mock_mode is False
+    assert settings.image_generation_mock_mode is False
     assert settings.enable_ip_adapter_faceid == "force"
     assert settings.has_openai_api_key is True
     assert "not-logged-secret" not in repr(settings)

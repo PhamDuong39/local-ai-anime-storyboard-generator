@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "project_id": "test-402fda",
+  "prompt_version": 1,
+  "style_preset": "anime_storyboard_default",
+  "output_preset": {
+    "id": "youtube_standard",
+    "name": "YouTube Standard",
+    "width": 1280,
+    "height": 720,
+    "aspect_ratio": "16:9"
+  },
+  "prompts": [
+    {
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "positive_prompt": "anime storyboard illustration, wide shot, eye level, Screenshot from 2026-06-15 11-41-22: Phase 1 MVP repository scaffold for a Windows-first local storyboard image generator. Runtime setup and launch instructions will be added in their corresponding M0 tasks. Windows PowerShell: ```powershell python -m venv .venv .venv\\Scripts\\Activate.ps1 ``` Windows Command Prompt:, story setting, unknown, cinematic mood, anime storyboard composition, clear character staging, environment matching the story excerpt, Keep Screenshot from 2026-06-15 11-41-22's outfit and visual identity consistent with the reference., cinematic lighting, clean line art, clear character staging, 16:9 composition, 1280x720 output",
+      "negative_prompt": "low quality, blurry, pixelated, distorted face, asymmetrical eyes, bad anatomy, bad hands, extra fingers, missing fingers, duplicate character, inconsistent outfit, inconsistent hairstyle, text, subtitle, speech bubble, watermark, logo, cropped face, cropped body",
+      "characters": [
+        {
+          "name": "Screenshot from 2026-06-15 11-41-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-15 11-41-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "role_in_scene": "featured character",
+          "visual_priority": "high"
+        }
+      ],
+      "generation_settings": {
+        "width": 1280,
+        "height": 720,
+        "num_images": 1,
+        "seed": null,
+        "guidance_scale": 7.0,
+        "num_inference_steps": 30
+      },
+      "status": "ready",
+      "manual_edit": false
+    },
+    {
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "positive_prompt": "anime storyboard illustration, wide shot, eye level, Screenshot from 2026-06-15 11-41-22: All tests should pass before launching the application. Development mode: ```bash uvicorn app.main:app --reload ``` Production-style local run: ```bash uvicorn app.main:app --host 127.0.0.1 --port 8000 ``` ```bash .\\.venv\\Scripts\\python.exe -m uvicorn app.main:app --host 127.0.0., story setting, unknown, cinematic mood, anime storyboard composition, clear character staging, environment matching the story excerpt, Keep Screenshot from 2026-06-15 11-41-22's outfit and visual identity consistent with the reference., cinematic lighting, clean line art, clear character staging, 16:9 composition, 1280x720 output",
+      "negative_prompt": "low quality, blurry, pixelated, distorted face, asymmetrical eyes, bad anatomy, bad hands, extra fingers, missing fingers, duplicate character, inconsistent outfit, inconsistent hairstyle, text, subtitle, speech bubble, watermark, logo, cropped face, cropped body",
+      "characters": [
+        {
+          "name": "Screenshot from 2026-06-15 11-41-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-15 11-41-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "role_in_scene": "featured character",
+          "visual_priority": "high"
+        }
+      ],
+      "generation_settings": {
+        "width": 1280,
+        "height": 720,
+        "num_images": 1,
+        "seed": null,
+        "guidance_scale": 7.0,
+        "num_inference_steps": 30
+      },
+      "status": "ready",
+      "manual_edit": false
+    },
+    {
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "positive_prompt": "anime storyboard illustration, wide shot, eye level, Screenshot from 2026-06-15 11-41-22: Health check endpoint: ```text http://127.0.0.1:8000/health ``` Expected response: ```json { \"status\": \"ok\" } ``` The MVP is intended to run directly from source during development. Future milestones may provide: - PyInstaller packaging (`.exe`) - Windows installer packaging - On, story setting, unknown, cinematic mood, anime storyboard composition, clear character staging, environment matching the story excerpt, Keep Screenshot from 2026-06-15 11-41-22's outfit and visual identity consistent with the reference., cinematic lighting, clean line art, clear character staging, 16:9 composition, 1280x720 output",
+      "negative_prompt": "low quality, blurry, pixelated, distorted face, asymmetrical eyes, bad anatomy, bad hands, extra fingers, missing fingers, duplicate character, inconsistent outfit, inconsistent hairstyle, text, subtitle, speech bubble, watermark, logo, cropped face, cropped body",
+      "characters": [
+        {
+          "name": "Screenshot from 2026-06-15 11-41-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-15 11-41-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "role_in_scene": "featured character",
+          "visual_priority": "high"
+        }
+      ],
+      "generation_settings": {
+        "width": 1280,
+        "height": 720,
+        "num_images": 1,
+        "seed": null,
+        "guidance_scale": 7.0,
+        "num_inference_steps": 30
+      },
+      "status": "ready",
+      "manual_edit": false
+    }
+  ]
+}

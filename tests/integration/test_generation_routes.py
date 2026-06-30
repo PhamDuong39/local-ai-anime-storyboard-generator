@@ -26,6 +26,10 @@ class FakeHardwareService:
         return HardwareDetection(
             device="cuda",
             gpu_name="High VRAM GPU",
+            cpu_model="Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz",
+            cpu_arch="x86_64",
+            physical_cores=6,
+            logical_cores=12,
             vram_gb=12,
             cuda_available=True,
             hardware_profile=HardwareProfile.HIGH_VRAM_12GB_PLUS,
@@ -221,6 +225,9 @@ async def test_generation_page_shows_start_button_when_ready(
 
     assert response.status_code == 200
     assert "Ready" in response.text
+    assert "Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz" in response.text
+    assert "x86_64" in response.text
+    assert "6 physical / 12 logical" in response.text
     assert "High VRAM GPU" in response.text
     assert "Available" in response.text
     assert "12.0 GB" in response.text

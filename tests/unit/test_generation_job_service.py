@@ -299,6 +299,20 @@ def test_low_vram_warning_is_surfaced_without_blocking(tmp_path) -> None:
     ]
 
 
+def test_mid_vram_warning_is_surfaced_without_blocking(tmp_path) -> None:
+    root, project_id, preset = make_project(tmp_path)
+    save_scenes(root, project_id)
+    save_character(root, project_id)
+    save_prompts(root, project_id, preset)
+    result = GenerationJobService(
+        root,
+        hardware_service=FakeHardwareService(HardwareProfile.MID_VRAM_6_8GB),
+    ).check_readiness(project_id)
+
+    assert result.ok is True
+    assert [warning.code for warning in result.warnings] == ["MID_VRAM_CAUTION"]
+
+
 def test_start_job_raises_first_blocking_error(tmp_path) -> None:
     root, project_id, _ = make_project(tmp_path)
 
@@ -341,6 +355,27 @@ def test_starting_job_creates_generation_status_json(tmp_path) -> None:
     assert stored is not None
     assert stored.generation_plan.model_id == "sdxl-model"
     assert stored.character_consistency.method == "ip-adapter-faceid"
+
+
+def test_mid_vram_starting_job_persists_safer_sd15_plan(tmp_path) -> None:
+    root, project_id, preset = make_project(tmp_path)
+    save_scenes(root, project_id)
+    save_character(root, project_id)
+    save_prompts(root, project_id, preset)
+    service = GenerationJobService(
+        root,
+        hardware_service=FakeHardwareService(HardwareProfile.MID_VRAM_6_8GB),
+    )
+
+    job = service.start_job(project_id)
+    stored = service.get_status(project_id)
+
+    assert stored == job
+    assert stored is not None
+    assert stored.generation_plan.pipeline.value == "sd15"
+    assert stored.generation_plan.model_id == "sd15-model"
+    assert stored.character_consistency.enabled is False
+    assert stored.character_consistency.disabled_reason == "mid_vram_safe_fallback"
 
 
 def test_active_generation_status_blocks_second_job(tmp_path) -> None:

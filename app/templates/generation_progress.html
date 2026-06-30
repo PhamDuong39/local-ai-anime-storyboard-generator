@@ -19,16 +19,30 @@
     {% if readiness.hardware %}
       <dl class="prompt-scene-facts">
         <div>
-          <dt>Hardware</dt>
-          <dd>{{ readiness.hardware.hardware_profile.value }}</dd>
+          <dt>CPU model</dt>
+          <dd>{{ readiness.hardware.cpu_model or "Unavailable" }}</dd>
+        </div>
+        <div>
+          <dt>CPU architecture</dt>
+          <dd>{{ readiness.hardware.cpu_arch or "Unavailable" }}</dd>
+        </div>
+        <div>
+          <dt>CPU cores</dt>
+          <dd>
+            {% if readiness.hardware.physical_cores and readiness.hardware.logical_cores %}
+              {{ readiness.hardware.physical_cores }} physical / {{ readiness.hardware.logical_cores }} logical
+            {% elif readiness.hardware.logical_cores %}
+              {{ readiness.hardware.logical_cores }} logical
+            {% elif readiness.hardware.physical_cores %}
+              {{ readiness.hardware.physical_cores }} physical
+            {% else %}
+              Unavailable
+            {% endif %}
+          </dd>
         </div>
         <div>
           <dt>Device</dt>
           <dd>{{ readiness.hardware.device }}</dd>
-        </div>
-        <div>
-          <dt>GPU</dt>
-          <dd>{{ readiness.hardware.gpu_name or "CPU" }}</dd>
         </div>
         <div>
           <dt>CUDA</dt>
@@ -37,6 +51,14 @@
         <div>
           <dt>VRAM</dt>
           <dd>{{ readiness.hardware.vram_gb }} GB</dd>
+        </div>
+        <div>
+          <dt>Hardware profile</dt>
+          <dd>{{ readiness.hardware.hardware_profile.value }}</dd>
+        </div>
+        <div>
+          <dt>GPU</dt>
+          <dd>{{ readiness.hardware.gpu_name or "CPU" }}</dd>
         </div>
       </dl>
     {% endif %}

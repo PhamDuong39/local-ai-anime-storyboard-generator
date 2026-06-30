@@ -54,6 +54,10 @@ class HardwareSettings(BaseModel):
 
     device: str = Field(min_length=1)
     gpu_name: str | None = None
+    cpu_model: str | None = None
+    cpu_arch: str | None = None
+    physical_cores: int | None = Field(default=None, ge=1)
+    logical_cores: int | None = Field(default=None, ge=1)
     vram_gb: float = Field(ge=0)
     cuda_available: bool
     hardware_profile: HardwareProfile

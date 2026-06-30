@@ -33,6 +33,7 @@ class Settings(BaseSettings):
     # TODO(M8): Set OPENAI_MOCK_MODE=false after a valid OpenAI API key is
     # configured and real scene/prompt calls are verified.
     openai_mock_mode: bool = True
+    image_generation_mock_mode: bool = True
     openai_context_token_limit: int = 128000
     openai_request_overhead_tokens: int = 4000
     projects_root: Path = Path("./projects")

@@ -13,19 +13,19 @@ from app.schemas.generation import (
     GenerationReadinessResult,
     HardwareDetection,
     HardwareProfile,
-    PipelineKind,
 )
 from app.schemas.jobs import (
     GenerationJob,
     GenerationJobStatus,
-    GenerationPlan,
-    JobCharacterConsistency,
     SceneGenerationResult,
     SceneResultStatus,
 )
-from app.schemas.manifest import RuntimeConsistencyMode
 from app.schemas.prompt import PromptList
 from app.schemas.scene import Scene, SceneStatus
+from app.services.generation_plan_service import (
+    GenerationPlanSelection,
+    GenerationPlanService,
+)
 from app.services.generation_service import GenerationService
 from app.services.hardware_service import HardwareService
 
@@ -172,19 +172,18 @@ class GenerationJobService:
     ) -> GenerationJob:
         settings = self.generation_service.get_generation_settings(project_id)
         now = datetime.now(timezone.utc)
+        selection = self._select_generation_plan(
+            settings=settings,
+            hardware=readiness.hardware,
+        )
         job = GenerationJob(
             project_id=project_id,
             job_id=f"gen_{now.strftime('%Y%m%d_%H%M%S')}_{uuid4().hex[:6]}",
             status=GenerationJobStatus.QUEUED,
             started_at=now,
             updated_at=now,
-            generation_plan=self._build_initial_generation_plan(
-                settings=settings,
-                hardware=readiness.hardware,
-            ),
-            character_consistency=self._build_character_consistency(
-                readiness.hardware
-            ),
+            generation_plan=selection.generation_plan,
+            character_consistency=selection.character_consistency,
             total_scenes=readiness.active_scene_count,
             current_message="Generation job queued.",
         )
@@ -355,53 +354,12 @@ class GenerationJobService:
         return metadata_path(self.projects_root, project_id, "generation_status.json")
 
     @staticmethod
-    def _build_initial_generation_plan(
+    def _select_generation_plan(
         *,
         settings: GenerationSettings,
         hardware: HardwareDetection | None,
-    ) -> GenerationPlan:
-        profile = hardware.hardware_profile if hardware else HardwareProfile.UNKNOWN
-        device = hardware.device if hardware else "unknown"
-        if profile in {HardwareProfile.CPU_ONLY, HardwareProfile.LOW_VRAM_4GB}:
-            pipeline = PipelineKind.SD15
-            model_id = settings.image_model.low_vram_image_model_id
-        else:
-            pipeline = PipelineKind.SDXL
-            model_id = settings.image_model.image_model_id
-
-        return GenerationPlan(
-            pipeline=pipeline,
-            model_id=model_id,
-            device="cpu" if profile is HardwareProfile.CPU_ONLY else device,
-            torch_dtype="float16" if device == "cuda" else "float32",
-            output_preset_id=settings.output_preset.id,
-        )
-
-    @staticmethod
-    def _build_character_consistency(
-        hardware: HardwareDetection | None,
-    ) -> JobCharacterConsistency:
-        profile = hardware.hardware_profile if hardware else HardwareProfile.UNKNOWN
-        if profile is HardwareProfile.LOW_VRAM_4GB:
-            return JobCharacterConsistency(
-                method="ip-adapter-faceid",
-                mode=RuntimeConsistencyMode.FACEID_DISABLED_LOW_VRAM,
-                enabled=False,
-                disabled_reason="low_vram_default",
-            )
-        if profile is HardwareProfile.CPU_ONLY:
-            return JobCharacterConsistency(
-                method="ip-adapter-faceid",
-                mode=RuntimeConsistencyMode.PROMPT_ONLY,
-                enabled=False,
-                disabled_reason="cpu_mode",
-            )
-        return JobCharacterConsistency(
-            method="ip-adapter-faceid",
-            mode=RuntimeConsistencyMode.PROMPT_ONLY,
-            enabled=False,
-            disabled_reason="faceid_not_selected_in_m7",
-        )
+    ) -> GenerationPlanSelection:
+        return GenerationPlanService().select(settings=settings, hardware=hardware)
 
     @staticmethod
     def _add_hardware_warnings(
@@ -429,6 +387,14 @@ class GenerationJobService:
                 GenerationJobService._issue(
                     "LOW_VRAM_MODE_RECOMMENDED",
                     "Your GPU has limited VRAM. Low VRAM Preview is recommended.",
+                    {"vram_gb": hardware.vram_gb},
+                )
+            )
+        elif hardware.hardware_profile is HardwareProfile.MID_VRAM_6_8GB:
+            warnings.append(
+                GenerationJobService._issue(
+                    "MID_VRAM_CAUTION",
+                    "Your GPU may need cautious image settings. Quality mode can be slower or fail on larger presets.",
                     {"vram_gb": hardware.vram_gb},
                 )
             )
