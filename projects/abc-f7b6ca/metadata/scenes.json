@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "project_id": "abc-f7b6ca",
+  "story_title": "Local AI Anime Storyboard Generator",
+  "language": "unknown",
+  "scene_count": 3,
+  "scenes": [
+    {
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "title": "Story opening",
+      "source_excerpt": "Phase 1 MVP repository scaffold for a Windows-first local storyboard image generator.\n\nRuntime setup and launch instructions will be added in their corresponding M0 tasks.\n\nWindows PowerShell:\n\n```powershell\npython -m venv .venv\n.venv\\Scripts\\Activate.ps1\n```\n\nWindows Command Prompt:\n\n```cmd\npython -m venv .venv\n.venv\\Scripts\\activate.bat\n```\n\n```bash\npip install -r requirements/base.txt -r requirements/dev.txt\n```\n\n```bash\npytest\n```",
+      "summary": "Phase 1 MVP repository scaffold for a Windows-first local storyboard image generator. Runtime setup and launch instructions will be added in their corresponding M0 tasks. Windows PowerShell: ```powershell python -m venv .venv .venv\\Scripts\\Activate.ps1 ``` Windows Command Prompt:",
+      "characters": [
+        "Screenshot from 2026-06-30 15-48-22"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "Phase 1 MVP repository scaffold for a Windows-first local storyboard image generator. Runtime setup and launch instructions will be added in their corresponding M0 tasks. Windows PowerShell: ```powershell python -m venv .venv .venv\\Scripts\\Activate.ps1 ``` Windows Command Prompt:",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep Screenshot from 2026-06-30 15-48-22's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    },
+    {
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "title": "Story development",
+      "source_excerpt": "All tests should pass before launching the application.\n\nDevelopment mode:\n\n```bash\nuvicorn app.main:app --reload\n```\n\nProduction-style local run:\n\n```bash\nuvicorn app.main:app --host 127.0.0.1 --port 8000\n```\n\n```bash\n.\\.venv\\Scripts\\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000\n```\n\nOpen your browser and navigate to:\n\n```text\nhttp://127.0.0.1:8000\n```",
+      "summary": "All tests should pass before launching the application. Development mode: ```bash uvicorn app.main:app --reload ``` Production-style local run: ```bash uvicorn app.main:app --host 127.0.0.1 --port 8000 ``` ```bash .\\.venv\\Scripts\\python.exe -m uvicorn app.main:app --host 127.0.0.",
+      "characters": [
+        "Screenshot from 2026-06-30 15-48-22"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "All tests should pass before launching the application. Development mode: ```bash uvicorn app.main:app --reload ``` Production-style local run: ```bash uvicorn app.main:app --host 127.0.0.1 --port 8000 ``` ```bash .\\.venv\\Scripts\\python.exe -m uvicorn app.main:app --host 127.0.0.",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep Screenshot from 2026-06-30 15-48-22's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    },
+    {
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "title": "Story conclusion",
+      "source_excerpt": "Health check endpoint:\n\n```text\nhttp://127.0.0.1:8000/health\n```\n\nExpected response:\n\n```json\n{\n  \"status\": \"ok\"\n}\n```\n\nThe MVP is intended to run directly from source during development.\n\nFuture milestones may provide:\n\n- PyInstaller packaging (`.exe`)\n- Windows installer packaging\n- One-click launcher scripts",
+      "summary": "Health check endpoint: ```text http://127.0.0.1:8000/health ``` Expected response: ```json { \"status\": \"ok\" } ``` The MVP is intended to run directly from source during development. Future milestones may provide: - PyInstaller packaging (`.exe`) - Windows installer packaging - On",
+      "characters": [
+        "Screenshot from 2026-06-30 15-48-22"
+      ],
+      "location": "story setting",
+      "time_of_day": "unknown",
+      "mood": "cinematic",
+      "main_action": "Health check endpoint: ```text http://127.0.0.1:8000/health ``` Expected response: ```json { \"status\": \"ok\" } ``` The MVP is intended to run directly from source during development. Future milestones may provide: - PyInstaller packaging (`.exe`) - Windows installer packaging - On",
+      "camera_shot": "wide shot",
+      "camera_angle": "eye level",
+      "visual_details": [
+        "anime storyboard composition",
+        "clear character staging",
+        "environment matching the story excerpt"
+      ],
+      "continuity_notes": [
+        "Keep Screenshot from 2026-06-30 15-48-22's outfit and visual identity consistent with the reference."
+      ],
+      "status": "approved"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "characters": [
+    {
+      "name": "Screenshot from 2026-06-30 15-48-22",
+      "original_filename": "Screenshot from 2026-06-30 15-48-22.png",
+      "stored_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+      "mime_type": "image/png",
+      "width": 938,
+      "height": 423,
+      "file_size_bytes": 60711,
+      "is_full_body_expected": true,
+      "consistency_method": "ip-adapter-faceid",
+      "status": "warning",
+      "warnings": [
+        "LOW_RESOLUTION"
+      ]
+    }
+  ]
+}

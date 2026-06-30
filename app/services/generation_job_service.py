@@ -245,6 +245,7 @@ class GenerationJobService:
         scene_number: int,
         status: SceneResultStatus,
         output_path: str | None = None,
+        seed: int | None = None,
         error_code: str | None = None,
         error_message: str | None = None,
     ) -> GenerationJob:
@@ -258,6 +259,7 @@ class GenerationJobService:
             scene_number=scene_number,
             status=status,
             output_path=output_path,
+            seed=seed,
             error_code=error_code,
             error_message=error_message,
             started_at=now,

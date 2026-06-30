@@ -9,6 +9,7 @@ from app.core.paths import metadata_path, project_root
 from app.main import app
 from app.schemas.character import CharacterMetadata
 from app.schemas.generation import HardwareDetection, HardwareProfile
+from app.schemas.jobs import GenerationJobStatus
 from app.schemas.prompt import PromptList
 from app.schemas.scene import SceneList
 from app.services.generation_job_service import GenerationJobService
@@ -22,7 +23,23 @@ NOW = datetime(2026, 6, 11, 10, 15, 30, tzinfo=timezone.utc)
 
 
 class FakeHardwareService:
+    def __init__(self, profile: HardwareProfile = HardwareProfile.HIGH_VRAM_12GB_PLUS):
+        self.profile = profile
+
     def detect_hardware(self) -> HardwareDetection:
+        if self.profile is HardwareProfile.LOW_VRAM_4GB:
+            return HardwareDetection(
+                device="cuda",
+                gpu_name="Low VRAM GPU",
+                cpu_model="Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz",
+                cpu_arch="x86_64",
+                physical_cores=6,
+                logical_cores=12,
+                vram_gb=4,
+                cuda_available=True,
+                hardware_profile=HardwareProfile.LOW_VRAM_4GB,
+                detected_at=NOW,
+            )
         return HardwareDetection(
             device="cuda",
             gpu_name="High VRAM GPU",
@@ -77,15 +94,25 @@ def prompt() -> dict[str, object]:
     }
 
 
-def configure(monkeypatch, tmp_path, scene_status: str):
-    settings = Settings(projects_root=tmp_path / "projects")
+def configure(
+    monkeypatch,
+    tmp_path,
+    scene_status: str,
+    *,
+    image_generation_mock_mode: bool = True,
+    hardware_profile: HardwareProfile = HardwareProfile.HIGH_VRAM_12GB_PLUS,
+):
+    settings = Settings(
+        projects_root=tmp_path / "projects",
+        image_generation_mock_mode=image_generation_mock_mode,
+    )
     monkeypatch.setattr(routes_generation, "get_settings", lambda: settings)
     monkeypatch.setattr(
         routes_generation,
         "_generation_job_service",
         lambda active_settings: GenerationJobService(
             active_settings.projects_root,
-            hardware_service=FakeHardwareService(),
+            hardware_service=FakeHardwareService(hardware_profile),
         ),
     )
     project = ProjectService(
@@ -183,6 +210,117 @@ async def test_start_generation_with_valid_mock_data_succeeds(
     manifest = read_json(root / "outputs/manifest.json")
     assert manifest["assets"][0]["scene_id"] == "scene_001"
     assert (root / manifest["assets"][0]["output_path"]).is_file()
+
+
+@pytest.mark.asyncio
+async def test_start_generation_real_mode_dispatches_real_service(
+    monkeypatch, tmp_path
+) -> None:
+    settings, project = configure(
+        monkeypatch,
+        tmp_path,
+        "approved",
+        image_generation_mock_mode=False,
+        hardware_profile=HardwareProfile.LOW_VRAM_4GB,
+    )
+    PromptService(settings.projects_root).save_prompts(
+        project.project_id,
+        PromptList.model_validate(
+            {
+                "project_id": project.project_id,
+                "output_preset": project.output_preset.model_dump(mode="json"),
+                "prompts": [prompt()],
+            }
+        ),
+    )
+    calls: list[tuple[str, str]] = []
+
+    class FakeRouteGenerationService:
+        def __init__(self, projects_root):
+            self.projects_root = projects_root
+
+        def generate_mock_images(self, project_id: str, job_id: str) -> None:
+            raise AssertionError("mock generation should not run in real mode")
+
+        def generate_real_images(self, project_id: str, job_id: str) -> None:
+            calls.append((project_id, job_id))
+            GenerationJobService(self.projects_root).finalize_job(
+                project_id, GenerationJobStatus.COMPLETED
+            )
+
+    monkeypatch.setattr(
+        routes_generation, "GenerationService", FakeRouteGenerationService
+    )
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        response = await client.post(
+            f"/projects/{project.project_id}/generation/start",
+            headers={"Accept": "application/json"},
+        )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["data"]["job"]["status"] == "completed"
+    assert calls == [(project.project_id, body["data"]["job"]["job_id"])]
+
+
+@pytest.mark.asyncio
+async def test_start_generation_real_mode_runs_sdxl_shared_real_path(
+    monkeypatch, tmp_path
+) -> None:
+    settings, project = configure(
+        monkeypatch,
+        tmp_path,
+        "approved",
+        image_generation_mock_mode=False,
+    )
+    PromptService(settings.projects_root).save_prompts(
+        project.project_id,
+        PromptList.model_validate(
+            {
+                "project_id": project.project_id,
+                "output_preset": project.output_preset.model_dump(mode="json"),
+                "prompts": [prompt()],
+            }
+        ),
+    )
+    calls: list[tuple[str, str]] = []
+
+    class FakeRouteGenerationService:
+        def __init__(self, projects_root):
+            self.projects_root = projects_root
+
+        def generate_mock_images(self, project_id: str, job_id: str) -> None:
+            raise AssertionError("mock generation should not run in real mode")
+
+        def generate_real_images(self, project_id: str, job_id: str) -> None:
+            calls.append((project_id, job_id))
+            status = GenerationJobService(self.projects_root).get_status(project_id)
+            assert status is not None
+            assert status.generation_plan.pipeline.value == "sdxl"
+            GenerationJobService(self.projects_root).finalize_job(
+                project_id, GenerationJobStatus.COMPLETED
+            )
+
+    monkeypatch.setattr(
+        routes_generation, "GenerationService", FakeRouteGenerationService
+    )
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        response = await client.post(
+            f"/projects/{project.project_id}/generation/start",
+            headers={"Accept": "application/json"},
+        )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["data"]["job"]["status"] == "completed"
+    assert body["data"]["job"]["generation_plan"]["pipeline"] == "sdxl"
+    assert calls == [(project.project_id, body["data"]["job"]["job_id"])]
 
 
 @pytest.mark.asyncio

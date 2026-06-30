@@ -51,6 +51,7 @@ class SceneGenerationResult(BaseModel):
     scene_number: int = Field(ge=1)
     status: SceneResultStatus
     output_path: str | None = None
+    seed: int | None = Field(default=None, ge=0)
     error_code: str | None = None
     error_message: str | None = None
     started_at: datetime

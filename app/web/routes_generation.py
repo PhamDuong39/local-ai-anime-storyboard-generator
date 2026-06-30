@@ -85,11 +85,23 @@ async def start_generation(
         project_id,
         confirm_cpu_slow=confirm_cpu_slow,
     )
-    GenerationService(settings.projects_root).generate_mock_images(
-        project_id, job.job_id
-    )
+    generation_service = GenerationService(settings.projects_root)
+    if settings.image_generation_mock_mode:
+        generation_service.generate_mock_images(project_id, job.job_id)
+        flash_message = "Mock generation completed."
+    else:
+        generation_service.generate_real_images(project_id, job.job_id)
+        flash_message = "Generation finished."
     completed_job = GenerationJobService(settings.projects_root).get_status(project_id)
     response_job = completed_job or job
+    flash_kind = (
+        "success"
+        if response_job.status
+        in {GenerationJobStatus.COMPLETED, GenerationJobStatus.PARTIAL}
+        else "error"
+    )
+    if flash_kind == "error" and response_job.errors:
+        flash_message = response_job.errors[0]
     if _wants_json(request) and not _is_htmx(request):
         return JSONResponse(
             {
@@ -106,8 +118,8 @@ async def start_generation(
             context={
                 **_context(settings, project_id),
                 "job": response_job,
-                "flash_message": "Mock generation completed.",
-                "flash_kind": "success",
+                "flash_message": flash_message,
+                "flash_kind": flash_kind,
             },
         )
     return RedirectResponse(url=f"/projects/{project_id}/generation", status_code=303)

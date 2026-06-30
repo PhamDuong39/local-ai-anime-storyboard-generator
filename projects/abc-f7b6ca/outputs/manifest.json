@@ -1,0 +1,393 @@
+{
+  "version": 1,
+  "project_id": "abc-f7b6ca",
+  "latest_job_id": "gen_20260630_095904_78c577",
+  "created_at": "2026-06-30T09:33:47.737745Z",
+  "updated_at": "2026-06-30T09:59:04.648895Z",
+  "assets": [
+    {
+      "asset_id": "asset_scene_001_gen_20260630_093347_a91348",
+      "job_id": "gen_20260630_093347_a91348",
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "scene_title": "Story opening",
+      "prompt_id": "scene_001",
+      "output_filename": "001_story_opening.png",
+      "output_path": "outputs/images/001_story_opening.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 1,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:bebebb8cde938d1ae863808c525d62370aaacf807133922acc953eb55907a073",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:33:47.786755Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_002_gen_20260630_093347_a91348",
+      "job_id": "gen_20260630_093347_a91348",
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "scene_title": "Story development",
+      "prompt_id": "scene_002",
+      "output_filename": "002_story_development.png",
+      "output_path": "outputs/images/002_story_development.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 2,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:9d98698d34afa5aa7192c8a8624b8f9b9312b1350e210aaa89d8ac28295c31df",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:33:47.831230Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_003_gen_20260630_093347_a91348",
+      "job_id": "gen_20260630_093347_a91348",
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "scene_title": "Story conclusion",
+      "prompt_id": "scene_003",
+      "output_filename": "003_story_conclusion.png",
+      "output_path": "outputs/images/003_story_conclusion.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 3,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:7c8f406aa79f324c8aaa1c06bc2e38afa1daface015afcd1d861be7c4008bf8a",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:33:47.872181Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_001_gen_20260630_094318_354ab8",
+      "job_id": "gen_20260630_094318_354ab8",
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "scene_title": "Story opening",
+      "prompt_id": "scene_001",
+      "output_filename": "001_story_opening_v2.png",
+      "output_path": "outputs/images/001_story_opening_v2.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 1,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:bebebb8cde938d1ae863808c525d62370aaacf807133922acc953eb55907a073",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:43:18.540823Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_002_gen_20260630_094318_354ab8",
+      "job_id": "gen_20260630_094318_354ab8",
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "scene_title": "Story development",
+      "prompt_id": "scene_002",
+      "output_filename": "002_story_development_v2.png",
+      "output_path": "outputs/images/002_story_development_v2.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 2,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:9d98698d34afa5aa7192c8a8624b8f9b9312b1350e210aaa89d8ac28295c31df",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:43:18.595643Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_003_gen_20260630_094318_354ab8",
+      "job_id": "gen_20260630_094318_354ab8",
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "scene_title": "Story conclusion",
+      "prompt_id": "scene_003",
+      "output_filename": "003_story_conclusion_v2.png",
+      "output_path": "outputs/images/003_story_conclusion_v2.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 3,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:7c8f406aa79f324c8aaa1c06bc2e38afa1daface015afcd1d861be7c4008bf8a",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:43:18.641066Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_001_gen_20260630_094402_8b73bd",
+      "job_id": "gen_20260630_094402_8b73bd",
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "scene_title": "Story opening",
+      "prompt_id": "scene_001",
+      "output_filename": "001_story_opening_v3.png",
+      "output_path": "outputs/images/001_story_opening_v3.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 1,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:bebebb8cde938d1ae863808c525d62370aaacf807133922acc953eb55907a073",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:44:02.237812Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_002_gen_20260630_094402_8b73bd",
+      "job_id": "gen_20260630_094402_8b73bd",
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "scene_title": "Story development",
+      "prompt_id": "scene_002",
+      "output_filename": "002_story_development_v3.png",
+      "output_path": "outputs/images/002_story_development_v3.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 2,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:9d98698d34afa5aa7192c8a8624b8f9b9312b1350e210aaa89d8ac28295c31df",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:44:02.283819Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_003_gen_20260630_094402_8b73bd",
+      "job_id": "gen_20260630_094402_8b73bd",
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "scene_title": "Story conclusion",
+      "prompt_id": "scene_003",
+      "output_filename": "003_story_conclusion_v3.png",
+      "output_path": "outputs/images/003_story_conclusion_v3.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 3,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:7c8f406aa79f324c8aaa1c06bc2e38afa1daface015afcd1d861be7c4008bf8a",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:44:02.330542Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_001_gen_20260630_095904_78c577",
+      "job_id": "gen_20260630_095904_78c577",
+      "scene_id": "scene_001",
+      "scene_number": 1,
+      "scene_title": "Story opening",
+      "prompt_id": "scene_001",
+      "output_filename": "001_story_opening_v4.png",
+      "output_path": "outputs/images/001_story_opening_v4.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 1,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:bebebb8cde938d1ae863808c525d62370aaacf807133922acc953eb55907a073",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:59:04.556924Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_002_gen_20260630_095904_78c577",
+      "job_id": "gen_20260630_095904_78c577",
+      "scene_id": "scene_002",
+      "scene_number": 2,
+      "scene_title": "Story development",
+      "prompt_id": "scene_002",
+      "output_filename": "002_story_development_v4.png",
+      "output_path": "outputs/images/002_story_development_v4.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 2,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:9d98698d34afa5aa7192c8a8624b8f9b9312b1350e210aaa89d8ac28295c31df",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:59:04.605372Z",
+      "error_code": null,
+      "error_message": null
+    },
+    {
+      "asset_id": "asset_scene_003_gen_20260630_095904_78c577",
+      "job_id": "gen_20260630_095904_78c577",
+      "scene_id": "scene_003",
+      "scene_number": 3,
+      "scene_title": "Story conclusion",
+      "prompt_id": "scene_003",
+      "output_filename": "003_story_conclusion_v4.png",
+      "output_path": "outputs/images/003_story_conclusion_v4.png",
+      "width": 1280,
+      "height": 720,
+      "status": "success",
+      "image_model_id": "stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "pipeline": "sd15",
+      "seed": 3,
+      "num_inference_steps": 30,
+      "guidance_scale": 7.0,
+      "output_preset_id": "youtube_standard",
+      "character_references": [
+        {
+          "name": "Screenshot from 2026-06-30 15-48-22",
+          "reference_image_path": "input/characters/Screenshot from 2026-06-30 15-48-22.png",
+          "consistency_method": "ip-adapter-faceid",
+          "runtime_consistency_mode": "prompt_only"
+        }
+      ],
+      "positive_prompt_hash": "sha256:7c8f406aa79f324c8aaa1c06bc2e38afa1daface015afcd1d861be7c4008bf8a",
+      "negative_prompt_hash": "sha256:c4d562cab5963962189209567c30341330979c46e007b676b9b94a838f90fc13",
+      "created_at": "2026-06-30T09:59:04.648853Z",
+      "error_code": null,
+      "error_message": null
+    }
+  ]
+}
